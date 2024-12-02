@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  fastapi:
+    build: .
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_URI: "mongodb+srv://matijadjuricic:YUciIk2lqBkETRQ4@cluster0.xapmscy.mongodb.net/Farm?retryWrites=true&w=majority"
+      DATABASE_NAME: "farm"
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
