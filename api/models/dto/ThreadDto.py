@@ -8,7 +8,6 @@ from models.dto.ReplyDto import (
 class ThreadCreateDto(BaseModel):
     title: str
     content: str
-    author_id: int
     tags: List[str]
 
 class ThreadEditDto(BaseModel):

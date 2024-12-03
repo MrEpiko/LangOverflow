@@ -13,7 +13,7 @@ class Thread(BaseModel):
     id: Optional[int] = None
     title: str
     content: str
-    author_id: int
+    author_id: Optional[int]
     tags: List[str]
     upvotes: List[int] = []
     downvotes: List[int] = []
@@ -32,6 +32,8 @@ class Thread(BaseModel):
             values['downvotes'] = []
         if 'replies' not in values:
             values['replies'] = [] 
+        if 'author_id' not in values:
+            values['author_id'] = 0
         return values
     
     async def save_to_db(self, db):
@@ -41,18 +43,12 @@ class Thread(BaseModel):
         self.id = thread_dict['id']
         return self
     
-    async def update_in_db(self, db, threadEditDto: ThreadEditDto):
-        thread_dict = self.model_dump(exclude_unset=True)
-        thread_dict['title'] = threadEditDto.title
-        thread_dict['content'] = threadEditDto.content
-        await db.threads.update_one({"id": id}, {"$set": thread_dict})
-        return self
-    
     async def delete_from_db(self, db):
-        await db.threads.delete_one({"id": id})
+        await db.threads.delete_one({"id": self.model_dump(exclude_unset=True)['id']})
 
     async def sync(self, db):
-        await db.threads.update_one({"id": id}, {"$set": self.model_dump(exclude_unset=True)})
+        thread_dict = self.model_dump(exclude_unset=True)
+        await db.threads.update_one({"id": thread_dict['id']}, {"$set": thread_dict})
         return self
 
     class Config:

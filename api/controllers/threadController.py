@@ -24,11 +24,11 @@ async def create_thread(thread: ThreadCreateDto, request: Request, db: db_depend
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token, db)
-    thread.author_id = user.id
     new_thread = Thread(**thread.model_dump())
+    new_thread.author_id = user.id
     await new_thread.save_to_db(db)
     user.created_threads.append(new_thread.id)
-    user.sync()
+    await user.sync(db)
     return new_thread
 
 @thread_router.get("/{thread_id}", response_model=Thread)
@@ -47,13 +47,16 @@ async def update_thread(thread_id: int, thread: ThreadEditDto, request: Request,
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token, db)
-    thread = await get_thread_collection(db).find_one({"id": thread_id})
-    if not thread:
+    thread_element = await get_thread_collection(db).find_one({"id": thread_id})
+    if not thread_element:
         raise HTTPException(status_code=404, detail="Thread not found")
-    if user.id != thread.author_id:
+    actual_thread = Thread(**thread_element)
+    if user.id != actual_thread.author_id:
         raise HTTPException(status_code=401, detail="You are not author of that thread")
-    updated_thread = thread.update_in_db(db, thread)
-    return updated_thread
+    actual_thread.title = thread.title
+    actual_thread.content = thread.content
+    await actual_thread.sync(db)
+    return actual_thread
 
 @thread_router.delete("/{thread_id}", response_model=dict)
 async def delete_thread(thread_id: int, request: Request, db: db_dependency):
@@ -64,11 +67,12 @@ async def delete_thread(thread_id: int, request: Request, db: db_dependency):
     thread = await get_thread_collection(db).find_one({"id": thread_id})
     if not thread:
         raise HTTPException(status_code=404, detail="Thread not found")
-    if user.id != thread.author_id:
+    actual_thread = Thread(**thread)
+    if user.id != actual_thread.author_id:
         raise HTTPException(status_code=401, detail="You are not author of that thread")
-    thread.delete_from_db()
-    user.created_threads.pop(thread_id)
-    user.sync()
+    user.created_threads.remove(thread_id)
+    await actual_thread.delete_from_db(db)
+    await user.sync(db)
     return {"message": "Thread deleted successfully"}
 
 @thread_router.post("/upvote", response_model=dict)
@@ -77,35 +81,37 @@ async def upvote_thread(thread_id: int, request: Request, db: db_dependency):
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token, db)
-    thread = await get_thread_collection(db).find_one({"id": thread_id})
-    if not thread:
+    thread_element = await get_thread_collection(db).find_one({"id": thread_id})
+    if not thread_element:
         raise HTTPException(status_code=404, detail="Thread not found")
+    thread = Thread(**thread_element)
     if user.id in thread.upvotes:
         raise HTTPException(status_code=409, detail="You've already upvoted that thread")
     response = "NEUTRAL"
-    if user.id in thread.downvotes: thread.downvotes.pop(user.id)
+    if user.id in thread.downvotes: thread.downvotes.remove(user.id)
     else: 
         response = "SUCCESS"
         thread.upvotes.append(user.id)
-    thread.sync()
+    await thread.sync(db)
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
 
-@thread_router.post("/downvote", response_model=Thread)
-async def upvote_thread(thread_id: int, request: Request, db: db_dependency):
+@thread_router.post("/downvote", response_model=dict)
+async def downvote_thread(thread_id: int, request: Request, db: db_dependency):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token, db)
-    thread = await get_thread_collection(db).find_one({"id": thread_id})
-    if not thread:
+    thread_element = await get_thread_collection(db).find_one({"id": thread_id})
+    if not thread_element:
         raise HTTPException(status_code=404, detail="Thread not found")
+    thread = Thread(**thread_element)
     if user.id in thread.downvotes:
         raise HTTPException(status_code=409, detail="You've already downvoted that thread")
     response = "NEUTRAL"
-    if user.id in thread.upvotes: thread.upvotes.pop(user.id)
+    if user.id in thread.upvotes: thread.upvotes.remove(user.id)
     else: 
         response = "SUCCESS"
         thread.downvotes.append(user.id)
-    thread.sync()
+    await thread.sync(db)
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
 
