@@ -6,6 +6,7 @@ import ProfilePage from "../pages/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Pagelayout from "../layouts/Pagelayout";
 import ProtectedRoute from "./ProtectedRoute";
+import QuestionPage from "../pages/QuestionPage";
 const routes = [
   {
     path: '/',
@@ -17,6 +18,16 @@ const routes = [
         </ProtectedRoute>
     ),
     errorElement: <NotFoundPage/>,
+  },
+  {
+  path: '/question',
+    element: (
+        <ProtectedRoute>
+            <Pagelayout>
+                <QuestionPage/>
+            </Pagelayout>
+        </ProtectedRoute>
+    )
   },
   {
     path: '/login',
