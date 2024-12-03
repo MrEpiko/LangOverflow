@@ -20,6 +20,8 @@ class User(BaseModel):
             values['created_at'] = datetime.now(timezone.utc)
         if 'initial_ip' not in values:
             values['initial_ip'] = hash_ip(get_ip_address())
+        if 'profile_picture' not in values:
+            values['profile_picture'] = None
         return values
     
     async def save_to_db(self, db):
@@ -27,6 +29,7 @@ class User(BaseModel):
         user_dict.pop('_id', None)
         await db.users.insert_one(user_dict)
         self.id = user_dict['id']
+        self.profile_picture = None
         return self
 
     async def sync(self, db):
