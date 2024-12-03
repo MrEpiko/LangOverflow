@@ -1,14 +1,14 @@
 .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     padding: 15px 30px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
+    background: var(--primary);
     z-index: 999;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, padding 0.3s ease;
 }
 .navbar ul {
     display: flex;
@@ -23,43 +23,35 @@
     position: relative;
 }
 .navbar a {
-    color: white;
+    color: var(--background);
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 1px;
-    transition: color 0.3s ease, transform 0.3s ease, letter-spacing 0.3s ease;
     position: relative;
 }
-.navbar a:hover {
-    color: #01ce0f;
-    transform: translateY(-3px);
-    letter-spacing: 2px;
-}
 .navbar a.active {
-    color: #01ce0f;
+    color: var(--background);
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-color: #01ce0f;
+    text-decoration-color: var(--background);
     text-decoration-thickness: 3px;
 }
 .navbar.scrolled {
     padding: 10px 30px;
-    background: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
-@media (max-width: 768px) {
-    .navbar {
-        padding: 10px 15px;
-    }
-    .navbar ul {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .navbar li {
-        margin: 10px 0;
-    }
-    .navbar a {
-        font-size: 1.1rem;
-    }
+.navbar .left h1 {
+    font-family: "Dancing Script", cursive;
+    color: var(--background);
+    font-size: 2rem;
+}
+.CTA {
+    background-color: transparent;
+}
+.profile_picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--background);
 }

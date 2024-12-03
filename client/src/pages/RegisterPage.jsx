@@ -42,44 +42,58 @@ const RegisterPage = () => {
   };
   if (token != null) return <Navigate to="/home" replace />;
   return (
-    <div className={styles.registerForm}>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-          value={formData.username}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          value={formData.password}
-        />
-        <input
-          type="password"
-          name="confirm_password"
-          placeholder="Confirm Password"
-          onChange={handleChange}
-          value={formData.confirm_password}
-        />
-        <button type="submit">Register</button>
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={handleGoogleFailure}
-        />
-      </form>
+    <div className={styles.container}>
+      <div className={styles.registerForm}>
+        <div className={styles.registerForm_left}>
+          <h2>Register</h2>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleChange}
+                value={formData.username}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={formData.email}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={formData.password}
+              />
+              <input
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm Password"
+                onChange={handleChange}
+                value={formData.confirm_password}
+              />
+              <div className={styles.GoogleLoginCont}>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleFailure}
+                />
+              </div>
+              
+              <button type="submit">Register</button>      
+          </form>
+        </div>
+        <div className={styles.divider}></div>
+        <div className={styles.loginForm_right}>
+            <h2 className={styles.logotitle}>LangOverflow</h2>
+            <p>Best language learning site supported by the community</p>
+        </div>  
+      </div>
+      
     </div>
+    
   );
 };
 export default RegisterPage;

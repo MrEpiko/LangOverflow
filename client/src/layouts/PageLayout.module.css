@@ -3,16 +3,3 @@
     flex-direction: column;
     min-height: 100vh;
 }
-main {
-    flex: 1;
-    padding: 50px 20px 20px 20px;
-    background-color: #121212;
-    color: white;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-}
-@media (max-width: 768px) {
-    main {
-        padding: 15px;
-    }
-}

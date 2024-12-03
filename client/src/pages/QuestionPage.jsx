@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './QuestionPage.module.css'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useTagStore } from '../services/store/useTagStore';
 import Tags from '../components/Tags';
 import { useToastMessage } from '../hooks/useToastMessage';
+import { useQuestionService } from '../services/api/useQuestionService';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const QuestionPage = () => {
 
-  const { user } = useAuthContext();
   const tagStore = useTagStore();
   const { errorMessage } = useToastMessage();
+  const { question } = useQuestionService();
+  const { user } = useAuthContext();
   
   
   const [formData, setFormData] = useState({
@@ -23,7 +25,13 @@ const QuestionPage = () => {
     if(formData.title.length < 5)errorMessage("Title needs atleast 5 letters.");
     if(formData.content.length < 5)errorMessage("Content needs atleast 10 letters.");
     if(tagStore.title.length < 1)errorMessage("You need atleast 1 tag in your post");
-    console.log(formData);
+    const requestObj = {
+      title: formData.title,
+      content: formData.content,
+      author_id: user.id,
+      tags: tagStore.title
+    }
+    question(requestObj);
   }
 
   const handleChange = (e) => {
@@ -41,7 +49,8 @@ const QuestionPage = () => {
 
   
   return (
-    <div className={styles.questionForm}>
+    <div className={styles.container}>
+      <div className={styles.questionForm}>
         <h1>Ask a question?</h1>
         <form onSubmit={handleSubmit}>
         <input
@@ -51,8 +60,7 @@ const QuestionPage = () => {
           onChange={handleChange}
           value={formData.title}
         />
-        <input
-          type="text"
+        <textarea
           name="content"
           placeholder="Content"
           onChange={handleChange}
@@ -66,7 +74,7 @@ const QuestionPage = () => {
           onChange={handleChange}
           value={formData.currentTag}
         />
-        <button type="button" onClick={handleOnClickTag}>add</button>
+        <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
         <p>*</p> 
         {/* TOOLTIP Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)  */}
         </div>
@@ -78,6 +86,8 @@ const QuestionPage = () => {
         <button type="submit">Post it</button>
       </form>
     </div>
+    </div>
+    
 
   )
 }

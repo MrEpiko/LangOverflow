@@ -41,16 +41,12 @@ const routes = [
   {
     path: '/login',
     element: 
-      <Pagelayout>
         <LoginPage/>
-      </Pagelayout>
   },
   {
     path: '/register',
     element:
-      <Pagelayout>
         <RegisterPage/>
-      </Pagelayout>
   },
   {
     path: '/profile',
