@@ -87,3 +87,13 @@ h2{
     color: #e74c3c;
     margin-bottom: 15px;
 }
+
+.divider{
+    width:1.5px;
+    height: 100%;
+    background-color:var(--primary);
+}
+
+.logotitle{
+    font-family: "Dancing Script", cursive;
+}

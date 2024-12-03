@@ -67,7 +67,7 @@ const LoginPage = () => {
         </div>
         <div className={styles.divider}></div>
         <div className={styles.loginForm_right}>
-            <h2>LangOverflow</h2>
+            <h2 className={styles.logotitle}>LangOverflow</h2>
             <p>Best language learning site supported by the community</p>
         </div>  
       </div>   

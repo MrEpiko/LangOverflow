@@ -20,7 +20,7 @@ def get_ip_address() -> str:
 def hash_ip(ip_address: str) -> str:
     return hashlib.sha256(ip_address.encode('utf-8')).hexdigest()
 def validate_email(email) -> bool:
-    regex = r'\b[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Z|a-z]{2,7}\b'
+    regex = r'\b[A-Za-z0-9]+(?:[.-_][A-Za-z0-9]+)*@[A-Za-z0-9-]+.[A-Za-z]{2,7}\b'
     return re.fullmatch(regex, email)
 def generate_thread_id() -> int:
     timestamp = int(time.time() * 1000)
