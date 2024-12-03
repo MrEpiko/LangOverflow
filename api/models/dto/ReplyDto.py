@@ -1,14 +1,10 @@
 from pydantic import BaseModel, model_validator
-from models.dto.AuthDto import (
-    UserResponseDto
-)
 from typing import List, Optional
 from datetime import datetime, timezone
 
 class ReplyCreateDto(BaseModel):
     parent_id: int
     content: str
-    author_id: int
 
 class ReplyThreadDto(BaseModel):
     id: int
@@ -21,8 +17,8 @@ class ReplyThreadDto(BaseModel):
     created_at: datetime
 
 class ReplyDto(BaseModel):
-    parent: Optional[ReplyThreadDto] = None
-    author: Optional[UserResponseDto] = None
+    parent_id: Optional[int] = None
+    author_id: Optional[int] = None
     content: str
     upvotes: List[int]
     downvotes: List[int]
@@ -36,8 +32,8 @@ class ReplyDto(BaseModel):
             values['upvotes'] = []
         if 'downvotes' not in values:
             values['downvotes'] = []
-        if 'parent' not in values:
-            values['parent'] = None
-        if 'author' not in values:
-            values['author'] = None
+        if 'parent_id' not in values:
+            values['parent_id'] = None
+        if 'author_id' not in values:
+            values['author_id'] = None
         return values

@@ -27,7 +27,7 @@ async def post_reply(reply: ReplyCreateDto, request: Request, db: db_dependency)
         raise HTTPException(status_code=404, detail="Thread not found")
     actual_thread = Thread(**thread)
     actual_reply = ReplyDto(**reply.model_dump())
-    actual_reply.author = user
-    actual_reply.parent = ReplyThreadDto(**thread.model_dump())
+    actual_reply.author_id = user.id
     actual_thread.replies.append(actual_reply)
+    await actual_thread.sync(db)
     return actual_reply
