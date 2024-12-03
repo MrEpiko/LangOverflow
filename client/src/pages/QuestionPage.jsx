@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import styles from './QuestionPage.module.css'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useTagStore } from '../services/store/useTagStore';
 import Tags from '../components/Tags';
 import { useToastMessage } from '../hooks/useToastMessage';
+import { useQuestionService } from '../services/api/useQuestionService';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const QuestionPage = () => {
 
-  const { user } = useAuthContext();
   const tagStore = useTagStore();
   const { errorMessage } = useToastMessage();
+  const { question } = useQuestionService();
+  const { user } = useAuthContext();
   
   
   const [formData, setFormData] = useState({
@@ -23,7 +25,13 @@ const QuestionPage = () => {
     if(formData.title.length < 5)errorMessage("Title needs atleast 5 letters.");
     if(formData.content.length < 5)errorMessage("Content needs atleast 10 letters.");
     if(tagStore.title.length < 1)errorMessage("You need atleast 1 tag in your post");
-    console.log(formData);
+    const requestObj = {
+      title: formData.title,
+      content: formData.content,
+      author_id: user.id,
+      tags: tagStore.title
+    }
+    question(requestObj);
   }
 
   const handleChange = (e) => {
