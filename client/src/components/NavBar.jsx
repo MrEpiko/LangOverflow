@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import style from "./NavBar.module.css";
+import CTA from "./CTA";
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -15,23 +16,25 @@ const NavBar = () => {
   }, []);
   return (
     <nav className={`${style.navbar} ${scrolled ? style.scrolled : ""}`}>
-      <ul>
-        <li>
-          <NavLink to="/register" className={({ isActive }) => (isActive ? style.active : "")}>Register</NavLink>
-        </li>
-        <li>
-          <NavLink to="/login" className={({ isActive }) => (isActive ? style.active : "")}>Login</NavLink>
-        </li>
-        <li>
-          <NavLink to="/home" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Landing Page</NavLink>
-        </li>
-        <li>
-          <NavLink to="/profile" className={({ isActive }) => (isActive ? style.active : "")}>Profile</NavLink>
-        </li>
-      </ul>
+      <div className={style.left}>
+        <h1>LangOverFlow</h1>
+      </div>
+      <div className={style.middle}>
+        <ul>
+          <li>
+            <NavLink to="/home" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/questions" className={({ isActive }) => (isActive ? style.active : "")}>Questions</NavLink>
+          </li>
+          <li>
+            <NavLink to="/tags" className={({ isActive }) => (isActive ? style.active : "")}>Tags</NavLink>
+          </li>
+        </ul>
+      </div>
+      <div className={style.right}>
+        <CTA title="GET STARTED"/>
+      </div>
     </nav>
   );
 };
