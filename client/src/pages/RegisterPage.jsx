@@ -4,9 +4,10 @@ import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
+import { GoogleLogin } from '@react-oauth/google';
 import styles from './RegisterPage.module.css';
 const RegisterPage = () => {
-  const { register } = useAuthService();
+  const { register, authWithGoogle } = useAuthService();
   const { token } = useAuthContext();
   const { errorMessage } = useToastMessage();
   const [formData, setFormData] = useState({
@@ -30,6 +31,14 @@ const RegisterPage = () => {
       return;
     }
     register({ username, email, password});
+  };
+  const handleGoogleSuccess = async (payload) => {
+    const { credential } = payload;
+    authWithGoogle({ credential })
+  };
+  const handleGoogleFailure = (error) => {
+    console.error('Google login failed', error);
+    errorMessage('Google login failed');
   };
   if (token != null) return <Navigate to="/" replace />;
   return (
@@ -65,6 +74,10 @@ const RegisterPage = () => {
           value={formData.confirm_password}
         />
         <button type="submit">Register</button>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleFailure}
+        />
       </form>
     </div>
   );

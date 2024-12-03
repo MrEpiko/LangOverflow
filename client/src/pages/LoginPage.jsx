@@ -1,3 +1,4 @@
+import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuthService } from '../services/api/useAuthService';
@@ -6,7 +7,7 @@ import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
 import styles from './LoginPage.module.css';
 const LoginPage = () => {
-  const { login } = useAuthService();
+  const { login, authWithGoogle } = useAuthService();
   const { token } = useAuthContext();
   const { errorMessage } = useToastMessage();
   const [formData, setFormData] = useState({
@@ -23,6 +24,14 @@ const LoginPage = () => {
       return;
     }
     login(formData);
+  };
+  const handleGoogleSuccess = async (payload) => {
+    const { credential } = payload;
+    authWithGoogle({ credential })
+  };
+  const handleGoogleFailure = (error) => {
+    console.error('Google login failed', error);
+    errorMessage('Google login failed');
   };
   if (token != null) return <Navigate to="/" replace />;
   return (
@@ -44,6 +53,10 @@ const LoginPage = () => {
           value={formData.password}
         />
         <button type="submit">Login</button>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleFailure}
+        />
       </form>
     </div>
   );

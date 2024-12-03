@@ -7,6 +7,7 @@ class User(BaseModel):
     username: str
     email: str
     password: str
+    profile_picture: Optional[str] = None
     initial_ip: Optional[str] = None
     created_at: Optional[datetime] = None
 
