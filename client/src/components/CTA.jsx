@@ -1,8 +1,15 @@
-import styles from "./CTA.module.css";
-const CTA = ({ title, onClick, loading = false, ...props }) => {
+import styles from './CTA.module.css';
+import classNames from 'classnames';
+const CTA = ({ title, loading = false, onClick, className, ...props }) => {
+  const buttonClass = classNames(styles.cta_button, className);
   return (
-    <button className={styles.CTA} onClick={onClick} disabled={loading} {...props}>
-      {loading ? <p>loading...</p> : title}
+    <button
+      className={buttonClass}
+      onClick={onClick}
+      disabled={loading}
+      {...props}
+    >
+      {title}
     </button>
   );
 };
