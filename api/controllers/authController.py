@@ -14,10 +14,11 @@ from models.dto.AuthDto import (
     UserRegisterDto,
     UserResponseDto,
 )
+from models.Thread import Thread
 from helpers.helper import get_password_hash, validate_email
 from models.Token import Token
 from models.User import User
-from typing import Annotated, Optional
+from typing import Annotated, Optional, List
 import httpx
 auth_router = APIRouter()
 db_dependency = Annotated[AsyncIOMotorClient, Depends(get_database)]
@@ -53,7 +54,7 @@ async def auth_user(request: Request, db: db_dependency, access_token: Optional[
     if not authorization_token and not access_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token or access_token, db)
-    return UserResponseDto(id=user.id, username=user.username, email=user.email)
+    return UserResponseDto(id=user.id, username=user.username, email=user.email, profile_picture=user.profile_picture)
 
 @auth_router.post("/google", response_model=Token)
 async def google_login(token: dict, db: db_dependency):
@@ -81,3 +82,29 @@ async def google_login(token: dict, db: db_dependency):
             await new_user.save_to_db(db)
         access_token = generate_access_token(db_user["email"])
         return Token(access_token=access_token, token_type="bearer")
+
+@auth_router.get("/{user_id}", response_model=UserResponseDto)
+async def get_user(user_id: int, request: Request, db: db_dependency):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    user = await get_user_collection(db).find_one({"id": user_id})
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return UserResponseDto(id=user.id, username=user.username, email=user.email, profile_picture=user.profile_picture)
+
+@auth_router.get("/{user_id}/threads", response_model=List[Thread])
+async def get_user(user_id: int, request: Request, db: db_dependency):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    user = await get_user_collection(db).find_one({"id": user_id})
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    actual_user = User(**user) # pitaj matiju kako da iz user dobijes actual User i kako paginaciju da uradim TODO
+    threads = []
+    for i in actual_user.created_threads:
+        thread = await db.threads.find_one({"id": i})
+        if not thread: continue
+        threads.append(thread)
+    return threads

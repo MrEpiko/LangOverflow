@@ -2,12 +2,11 @@ from pydantic import BaseModel, model_validator
 from datetime import datetime, timezone
 from helpers.helper import generate_thread_id
 from typing import Optional, List
-from models import User
-from models.Reply import (
-    Reply
-)
 from models.dto.ThreadDto import (
     ThreadEditDto
+)
+from models.dto.ReplyDto import (
+    ReplyDto
 )
 
 class Thread(BaseModel):
@@ -17,7 +16,8 @@ class Thread(BaseModel):
     author_id: int
     tags: List[str]
     upvotes: List[int] = []
-    replies: List[Reply] = []  
+    downvotes: List[int] = []
+    replies: List[ReplyDto] = []  
     created_at: Optional[datetime] = None
 
     @model_validator(mode="before")
@@ -28,6 +28,8 @@ class Thread(BaseModel):
             values['created_at'] = datetime.now(timezone.utc)
         if 'upvotes' not in values:
             values['upvotes'] = []
+        if 'downvotes' not in values:
+            values['downvotes'] = []
         if 'replies' not in values:
             values['replies'] = [] 
         return values
@@ -48,6 +50,10 @@ class Thread(BaseModel):
     
     async def delete_from_db(self, db):
         await db.threads.delete_one({"id": id})
+
+    async def sync(self, db):
+        await db.threads.update_one({"id": id}, {"$set": self.model_dump(exclude_unset=True)})
+        return self
 
     class Config:
         json_encoders = {
