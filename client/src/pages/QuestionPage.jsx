@@ -22,9 +22,9 @@ const QuestionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(formData.title.length < 5)errorMessage("Title needs atleast 5 letters.");
-    if(formData.content.length < 5)errorMessage("Content needs atleast 10 letters.");
-    if(tagStore.title.length < 1)errorMessage("You need atleast 1 tag in your post");
+    if(formData.title.length < 5){errorMessage("Title needs atleast 5 letters.");return;}
+    if(formData.content.length < 5){errorMessage("Content needs atleast 10 letters."); return;}
+    if(tagStore.title.length < 1){errorMessage("You need atleast 1 tag in your post");return;}
     const requestObj = {
       title: formData.title,
       content: formData.content,

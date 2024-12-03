@@ -94,10 +94,11 @@ async def get_user(user_id: int, request: Request, db: db_dependency):
     user = await get_user_collection(db).find_one({"id": user_id})
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    return UserResponseDto(id=user.id, username=user.username, email=user.email, profile_picture=user.profile_picture)
+    actual_user = User(**user)
+    return UserResponseDto(id=actual_user.id, username=actual_user.username, email=actual_user.email, profile_picture=actual_user.profile_picture)
 
-@auth_router.get("/{user_id}/threads", response_model=List[Thread])
-async def get_user(user_id: int, request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
+@auth_router.get("/{user_id}/threads", response_model=dict)
+async def get_user_threads(user_id: int, request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
@@ -109,7 +110,8 @@ async def get_user(user_id: int, request: Request, db: db_dependency, page: int 
     for i in actual_user.created_threads:
         thread = await db.threads.find_one({"id": i})
         if thread:
-            threads.append(thread)
+            actual_thread = Thread(**thread)
+            threads.append(actual_thread.model_dump())
 
     total_threads = len(threads)
     total_pages = ceil(total_threads / limit)
