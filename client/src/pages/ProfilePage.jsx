@@ -27,7 +27,7 @@ const ProfilePage = () => {
             <h1>{user.username}</h1>
             <h2>{user.email}</h2>
             <button onClick={logout}>Logout</button>
-            {data && data.map((thread) => (
+            {data && data.threads.map((thread) => (
                 <h1 key={thread.id}>{thread.title}</h1>
             ))}
         </div>
