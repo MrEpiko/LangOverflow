@@ -55,3 +55,14 @@
     object-fit: cover;
     border: 2px solid var(--background);
 }
+
+.addPost{
+    font-weight: 400 !important;
+    font-size: 3rem !important; 
+}
+
+.rightNav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -22,6 +22,7 @@ const NavBar = () => {
       <div className={styles.left}>
         <NavLink to="/home"><h1>LangOverflow</h1></NavLink>
       </div>
+      <div className={styles.rightNav}>
       <div className={styles.middle}>
         <ul>
           <li>
@@ -32,6 +33,9 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink to="/tags" className={({ isActive }) => (isActive ? styles.active : "")}>Tags</NavLink>
+          </li>
+          <li>
+            <NavLink to="/question" className={styles.addPost}>+</NavLink>
           </li>
         </ul>
       </div>
@@ -44,6 +48,8 @@ const NavBar = () => {
           <CTA title="Get started" className={styles.CTA} onClick={() => navigate("/login", { replace: true })}/>
         }
       </div>
+      </div>
+      
     </nav>
   );
 };
