@@ -20,10 +20,11 @@ from models.Token import Token
 from models.User import User
 from typing import Annotated, Optional, List
 import httpx
+import os
+
 auth_router = APIRouter()
 db_dependency = Annotated[AsyncIOMotorClient, Depends(get_database)]
-
-GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/tokeninfo?id_token="
+GOOGLE_TOKEN_URL = os.getenv("GOOGLE_TOKEN_URL", "")
 
 @auth_router.post("/login", response_model=Token)
 async def login(user: UserLoginDto, db: db_dependency):
@@ -80,6 +81,8 @@ async def google_login(token: dict, db: db_dependency):
                 password=get_password_hash("default_google")
             )
             await new_user.save_to_db(db)
+            access_token = generate_access_token(new_user.email)
+            return Token(access_token=access_token, token_type="bearer")
         access_token = generate_access_token(db_user["email"])
         return Token(access_token=access_token, token_type="bearer")
 
