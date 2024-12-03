@@ -1,9 +1,19 @@
 import React, { useState } from 'react'
 import styles from './QuestionPage.module.css'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useTagStore } from '../services/store/useTagStore';
+import Tags from '../components/Tags';
+import { useToastMessage } from '../hooks/useToastMessage';
+import { useQuestionService } from '../services/api/useQuestionService';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const QuestionPage = () => {
+
+  const tagStore = useTagStore();
+  const { errorMessage } = useToastMessage();
+  const { question } = useQuestionService();
   const { user } = useAuthContext();
+  
+  
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -12,14 +22,30 @@ const QuestionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if(formData.title.length < 5)errorMessage("Title needs atleast 5 letters.");
+    if(formData.content.length < 5)errorMessage("Content needs atleast 10 letters.");
+    if(tagStore.title.length < 1)errorMessage("You need atleast 1 tag in your post");
+    const requestObj = {
+      title: formData.title,
+      content: formData.content,
+      author_id: user.id,
+      tags: tagStore.title
+    }
+    question(requestObj);
   }
-
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleOnClickTag = () => {
+    if(formData.currentTag.length < 3){
+      errorMessage("Tag needs to have 3 or more characters");
+      return;
+    }
+    tagStore.addTag(formData.currentTag);
+    setFormData({...formData, ["currentTag"] : ""});
+  }
 
   
   return (
@@ -48,11 +74,15 @@ const QuestionPage = () => {
           onChange={handleChange}
           value={formData.currentTag}
         />
-        <button>add</button>
+        <button type="button" onClick={handleOnClickTag}>add</button>
         <p>*</p> 
-        {/* TOOLTIP Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, homonym)  */}
+        {/* TOOLTIP Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)  */}
         </div>
-       
+        <div>
+        {tagStore.title.map((title,index) => (
+          <Tags title={title} key={index} id = {index} ></Tags>
+        ))}
+        </div>
         <button type="submit">Post it</button>
       </form>
     </div>

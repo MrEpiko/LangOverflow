@@ -22,6 +22,8 @@ class User(BaseModel):
             values['initial_ip'] = hash_ip(get_ip_address())
         if 'profile_picture' not in values:
             values['profile_picture'] = None
+        if 'created_threads' not in values:
+            values['created_threads'] = []
         return values
     
     async def save_to_db(self, db):
@@ -33,7 +35,8 @@ class User(BaseModel):
         return self
 
     async def sync(self, db):
-        await db.users.update_one({"id": id}, {"$set": self.model_dump(exclude_unset=True)})
+        user_dict = self.model_dump(exclude_unset=True)
+        await db.users.update_one({"id": user_dict['id']}, {"$set": user_dict})
         return self
     
     class Config:
