@@ -49,7 +49,8 @@ const QuestionPage = () => {
 
   
   return (
-    <div className={styles.questionForm}>
+    <div className={styles.container}>
+      <div className={styles.questionForm}>
         <h1>Ask a question?</h1>
         <form onSubmit={handleSubmit}>
         <input
@@ -73,7 +74,7 @@ const QuestionPage = () => {
           onChange={handleChange}
           value={formData.currentTag}
         />
-        <button type="button" onClick={handleOnClickTag}>add</button>
+        <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
         <p>*</p> 
         {/* TOOLTIP Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)  */}
         </div>
@@ -85,6 +86,8 @@ const QuestionPage = () => {
         <button type="submit">Post it</button>
       </form>
     </div>
+    </div>
+    
 
   )
 }
