@@ -59,8 +59,7 @@ const QuestionPage = () => {
           onChange={handleChange}
           value={formData.title}
         />
-        <input
-          type="text"
+        <textarea
           name="content"
           placeholder="Content"
           onChange={handleChange}
