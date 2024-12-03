@@ -4,6 +4,7 @@ import hashlib
 import socket
 import time
 import re
+
 def generate_user_id() -> int:
     timestamp = int(time.time() * 1000)
     random_num = random.randint(1000, 9999)
@@ -21,3 +22,7 @@ def hash_ip(ip_address: str) -> str:
 def validate_email(email) -> bool:
     regex = r'\b[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Z|a-z]{2,7}\b'
     return re.fullmatch(regex, email)
+def generate_thread_id(user_id: int) -> int:
+    timestamp = int(time.time() * 1000)
+    random_num = random.randint(1000, 9999)
+    return user_id + timestamp + random_num

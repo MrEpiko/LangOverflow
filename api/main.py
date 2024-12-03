@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controllers import authController, userController
+from controllers import authController, threadController
 import os
-app = FastAPI(title="FarmApp", version="1.0", root_path="/api", debug=True)
+app = FastAPI(title="LangOverflow", version="1.0", root_path="/api", debug=True)
 origins = [
     "http://localhost:5173",
 ]
@@ -19,7 +19,7 @@ def ping():
     return {"message": "success", "status": 200}
 
 app.include_router(authController.auth_router, prefix="/auth", tags=["auth"])
-app.include_router(userController.user_router, prefix="/users", tags=["users"])
+app.include_router(threadController.thread_router, prefix="/threads", tags=["threads"])
 
 if __name__ == "__main__":
     import uvicorn

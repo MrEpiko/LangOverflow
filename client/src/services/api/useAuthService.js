@@ -41,6 +41,22 @@ export const useAuthService = () => {
             errorMessage(`Registration error: ${error}`);
         },
     });
+    const { mutate: authWithGoogle } = useMutation({
+        mutationFn: async ({ credential }) => {
+            const response = await apiClient.post('/auth/google', { token: credential });
+            return response.data;
+        },
+        onSuccess: (data) => {
+            setAuthToken(data.access_token);
+            Set('token', data.access_token);
+            navigate('/', { replace: true });
+            successMessage('Success login');
+        },
+        onError: (error) => {
+            console.error('Registration error:', error);
+            errorMessage(`Google login failed ${error}`);
+        },
+    });
     const fetchUserProfile = () => {
         const { data } = useQuery({
             queryKey: ['userProfile'],
@@ -71,5 +87,5 @@ export const useAuthService = () => {
         navigate('/login', { replace: true });
         successMessage('Success logout');
     };
-    return { login, register, logout, fetchUserProfile};
+    return { login, register, authWithGoogle, logout, fetchUserProfile};
 };

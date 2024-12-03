@@ -1,13 +1,15 @@
 from pydantic import BaseModel, model_validator
 from datetime import datetime, timezone
 from helpers.helper import generate_user_id, get_ip_address, hash_ip
-from typing import Optional
+from typing import Optional, List
 class User(BaseModel):
     id: Optional[int] = None
     username: str
     email: str
     password: str
+    profile_picture: Optional[str] = None
     initial_ip: Optional[str] = None
+    created_threads: List[int] = []
     created_at: Optional[datetime] = None
 
     @model_validator(mode="before")
@@ -25,6 +27,10 @@ class User(BaseModel):
         user_dict.pop('_id', None)
         await db.users.insert_one(user_dict)
         self.id = user_dict['id']
+        return self
+
+    async def sync(self, db):
+        await db.users.update_one({"id": id}, {"$set": self.model_dump(exclude_unset=True)})
         return self
     
     class Config:

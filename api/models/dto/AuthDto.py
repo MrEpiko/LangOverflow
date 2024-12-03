@@ -10,3 +10,4 @@ class UserResponseDto(BaseModel):
     id: int
     username: str
     email: str
+    profile_picture: str
