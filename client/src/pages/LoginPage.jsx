@@ -1,14 +1,14 @@
-import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
 import styles from './LoginPage.module.css';
 const LoginPage = () => {
-  const { login, authWithGoogle } = useAuthService();
   const { token } = useAuthContext();
+  const { login, authWithGoogle } = useAuthService();
   const { errorMessage } = useToastMessage();
   const [formData, setFormData] = useState({
     email: '',
@@ -33,7 +33,7 @@ const LoginPage = () => {
     console.error('Google login failed', error);
     errorMessage('Google login failed');
   };
-  if (token != null) return <Navigate to="/" replace />;
+  if (token != null) return <Navigate to="/home" replace />;
   return (
     <div className={styles.loginForm}>
       <h2>Login</h2>

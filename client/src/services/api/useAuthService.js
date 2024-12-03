@@ -17,7 +17,7 @@ export const useAuthService = () => {
         onSuccess: (data) => {
             setAuthToken(data.access_token);
             Set('token', data.access_token);
-            navigate('/', { replace: true });
+            navigate('/home', { replace: true });
             successMessage('Success login');
         },
         onError: (error) => {
@@ -33,7 +33,7 @@ export const useAuthService = () => {
         onSuccess: (data) => {
             setAuthToken(data.access_token);
             Set('token', data.access_token);
-            navigate('/', { replace: true });
+            navigate('/home', { replace: true });
             successMessage('Success register');
         },
         onError: (error) => {
@@ -49,7 +49,7 @@ export const useAuthService = () => {
         onSuccess: (data) => {
             setAuthToken(data.access_token);
             Set('token', data.access_token);
-            navigate('/', { replace: true });
+            navigate('/home', { replace: true });
             successMessage('Success login');
         },
         onError: (error) => {

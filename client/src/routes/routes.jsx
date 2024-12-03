@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import LandingPage from "../pages/LandingPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
@@ -11,13 +12,21 @@ const routes = [
   {
     path: '/',
     element: (
-        <ProtectedRoute>
-            <Pagelayout>
-                <HomePage/>
-            </Pagelayout>
-        </ProtectedRoute>
+      <Pagelayout>
+        <LandingPage/>
+      </Pagelayout>
     ),
     errorElement: <NotFoundPage/>,
+  },
+  {
+    path: '/home',
+    element: (
+      <ProtectedRoute>
+          <Pagelayout>
+              <HomePage/>
+          </Pagelayout>
+      </ProtectedRoute>
+    ),
   },
   {
   path: '/question',

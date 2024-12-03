@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
-import { GoogleLogin } from '@react-oauth/google';
 import styles from './RegisterPage.module.css';
 const RegisterPage = () => {
   const { register, authWithGoogle } = useAuthService();
@@ -40,7 +40,7 @@ const RegisterPage = () => {
     console.error('Google login failed', error);
     errorMessage('Google login failed');
   };
-  if (token != null) return <Navigate to="/" replace />;
+  if (token != null) return <Navigate to="/home" replace />;
   return (
     <div className={styles.registerForm}>
       <h2>Register</h2>

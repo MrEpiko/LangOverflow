@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Loading from '../../components/Loading';
 export const GoogleAuthProvider = ({ children }) => {

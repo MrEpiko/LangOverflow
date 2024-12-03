@@ -23,7 +23,10 @@ const NavBar = () => {
           <NavLink to="/login" className={({ isActive }) => (isActive ? style.active : "")}>Login</NavLink>
         </li>
         <li>
-          <NavLink to="/" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Home</NavLink>
+          <NavLink to="/home" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Home</NavLink>
+        </li>
+        <li>
+          <NavLink to="/" exact="true" className={({ isActive }) => (isActive ? style.active : "")}>Landing Page</NavLink>
         </li>
         <li>
           <NavLink to="/profile" className={({ isActive }) => (isActive ? style.active : "")}>Profile</NavLink>
