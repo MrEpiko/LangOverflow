@@ -9,6 +9,7 @@ const ProfilePage = () => {
             <h3>id: {user.id}</h3>
             <h1>{user.username}</h1>
             <h2>{user.email}</h2>
+            <img className={styles.profile_picture} src={user?.profile_picture} alt="Profile" />
             <button onClick={logout}>Logout</button>
         </div>
     );

@@ -13,9 +13,8 @@ export const useQuestionService = () => {
             const response = await apiClient.post('/threads/create', { title, content, author_id, tags });
             return response.data;
         },
-        onSuccess: (data) => {
-            navigate('/home', { replace: true });
-            successMessage('You succesfully posted question');
+        onSuccess: () => {
+            successMessage('You succesfully posted a question');
         },
         onError: (error) => {
             console.error('Create thread error:', error);
