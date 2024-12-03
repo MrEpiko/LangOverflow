@@ -20,10 +20,11 @@ from models.Token import Token
 from models.User import User
 from typing import Annotated, Optional, List
 import httpx
+import os
+
 auth_router = APIRouter()
 db_dependency = Annotated[AsyncIOMotorClient, Depends(get_database)]
-
-GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/tokeninfo?id_token="
+GOOGLE_TOKEN_URL = os.getenv("GOOGLE_TOKEN_URL", "")
 
 @auth_router.post("/login", response_model=Token)
 async def login(user: UserLoginDto, db: db_dependency):
@@ -80,6 +81,8 @@ async def google_login(token: dict, db: db_dependency):
                 password=get_password_hash("default_google")
             )
             await new_user.save_to_db(db)
+            access_token = generate_access_token(new_user.email)
+            return Token(access_token=access_token, token_type="bearer")
         access_token = generate_access_token(db_user["email"])
         return Token(access_token=access_token, token_type="bearer")
 
@@ -101,7 +104,7 @@ async def get_user(user_id: int, request: Request, db: db_dependency):
     user = await get_user_collection(db).find_one({"id": user_id})
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    actual_user = User(**user) # pitaj matiju kako da iz user dobijes actual User i kako paginaciju da uradim TODO
+    actual_user = User(**user)
     threads = []
     for i in actual_user.created_threads:
         thread = await db.threads.find_one({"id": i})
