@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException
-from fastapi import APIRouter, Depends, Request, HTTPException
+from math import ceil
+from fastapi import APIRouter, Depends, Request, HTTPException, Query
 from motor.motor_asyncio import AsyncIOMotorClient
 from config.db import get_database
 from services.authService import (
@@ -94,17 +94,30 @@ async def get_user(user_id: int, request: Request, db: db_dependency):
     return UserResponseDto(id=user.id, username=user.username, email=user.email, profile_picture=user.profile_picture)
 
 @auth_router.get("/{user_id}/threads", response_model=List[Thread])
-async def get_user(user_id: int, request: Request, db: db_dependency):
+async def get_user(user_id: int, request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_user_collection(db).find_one({"id": user_id})
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    actual_user = User(**user) # pitaj matiju kako da iz user dobijes actual User i kako paginaciju da uradim TODO
+    actual_user = User(**user)
     threads = []
     for i in actual_user.created_threads:
         thread = await db.threads.find_one({"id": i})
-        if not thread: continue
-        threads.append(thread)
-    return threads
+        if thread:
+            threads.append(thread)
+
+    total_threads = len(threads)
+    total_pages = ceil(total_threads / limit)
+    if page > total_pages and total_threads > 0:
+        raise HTTPException(status_code=404, detail="Page not found")
+    start_index = (page - 1) * limit
+    end_index = start_index + limit
+
+    return {
+        "threads": threads[start_index:end_index],
+        "page": page,
+        "total_pages": total_pages,
+        "total_threads": total_threads
+    }

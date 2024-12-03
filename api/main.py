@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controllers import authController, threadController
+from controllers import authController, threadController, replyController
 import os
 app = FastAPI(title="LangOverflow", version="1.0", root_path="/api", debug=True)
 origins = [
@@ -20,6 +20,7 @@ def ping():
 
 app.include_router(authController.auth_router, prefix="/auth", tags=["auth"])
 app.include_router(threadController.thread_router, prefix="/threads", tags=["threads"])
+app.include_router(replyController.reply_router, prefix="/replies", tags=["replies"])
 
 if __name__ == "__main__":
     import uvicorn

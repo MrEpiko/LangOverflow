@@ -108,3 +108,4 @@ async def upvote_thread(thread_id: int, request: Request, db: db_dependency):
         thread.downvotes.append(user.id)
     thread.sync()
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
+
