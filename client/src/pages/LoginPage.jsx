@@ -35,30 +35,43 @@ const LoginPage = () => {
   };
   if (token != null) return <Navigate to="/home" replace />;
   return (
-    <div className={styles.loginForm}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          value={formData.password}
-        />
-        <button type="submit">Login</button>
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={handleGoogleFailure}
-        />
-      </form>
+    <div className={styles.container}>
+      <div className={styles.loginForm}>
+        <div className={styles.loginForm_left}>
+          <h2 className={styles.form_title}>Sign in</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="email"
+            placeholder="E-mail"
+            onChange={handleChange}
+            value={formData.email}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            value={formData.password}
+          />
+          <div className={styles.GoogleLoginCont}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleFailure}
+            />
+          </div>
+          
+          <button type="submit">Login</button>
+          
+        </form>
+        </div>
+        <div className={styles.divider}></div>
+        <div className={styles.loginForm_right}>
+            <h2>LangOverflow</h2>
+            <p>Best language learning site supported by the community</p>
+        </div>  
+      </div>   
     </div>
-  );
+  );  
 };
 export default LoginPage;
