@@ -1,13 +1,21 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .questionForm {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
-    margin: 50px auto;
+    width: 50%;
+    height: 100vh;
     padding: 30px;
-    background-color: #1f1f1f;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    padding-top: 10rem;
 }
 
 .questionForm form {
@@ -17,12 +25,13 @@
 }
 
 .questionForm input {
-    padding: 12px;
-    border: 1px solid #555;
+    padding: 1.25rem;
+    border: 1px solid var(--text);
     border-radius: 5px;
-    background-color: #2c2c2c;
-    color: white;
+    background-color: var(--background);
+    color: var(--text);
     font-size: 16px;
+    height:2rem;
 }
 
 .questionForm input::placeholder {
@@ -31,7 +40,7 @@
 
 .questionForm button {
     padding: 12px;
-    background-color: #01ce0f;
+    background-color: var(--primary);
     color: white;
     border: none;
     border-radius: 5px;
@@ -41,14 +50,15 @@
 }
 
 .questionForm button:hover {
-    background-color: #01ce0f;
+    background-color: var(--secondary);
 }
 
 .questionForm h1{
-display: flex;
-justify-content: center;
-margin-bottom: 30px;
-}
+    display: flex;
+    justify-content: start;
+    margin-bottom: 3rem;
+    color:var(--text);
+    }
 
 .tagForm {
     display: flex;
@@ -57,7 +67,7 @@ margin-bottom: 30px;
 
 .tagForm button {
     padding: 12px;
-    background-color: #01ce0f;
+    background-color: var(--primary);
     color: white;
     border: none;
     border-radius: 5px;
@@ -67,5 +77,15 @@ margin-bottom: 30px;
 }
 
 .tagForm button:hover {
-    background-color: #01ce0f;
+    background-color: var(--secondary);
+}
+
+textarea{
+    resize: none;
+    height: 200px;
+    padding:0.5rem;
+    padding-left:1.25rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: 1px solid var(--text);
 }
