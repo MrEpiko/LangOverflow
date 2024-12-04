@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import styles from "./NavBar.module.css";
+import profile_img from "../assets/profile.png";
 import CTA from "./CTA";
 const NavBar = () => {
   const navigate = useNavigate();
@@ -20,36 +21,35 @@ const NavBar = () => {
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.left}>
-        <NavLink to="/home"><h1>LangOverflow</h1></NavLink>
+        <NavLink to="/home" replace><h1>LangOverflow</h1></NavLink>
       </div>
       <div className={styles.rightNav}>
       <div className={styles.middle}>
         <ul>
           <li>
-            <NavLink to="/home" exact="true" className={({ isActive }) => (isActive ? styles.active : "")}>Home</NavLink>
+            <NavLink to="/home" exact="true" replace className={({ isActive }) => (isActive ? styles.active : "")}>Home</NavLink>
           </li>
           <li>
-            <NavLink to="/questions" className={({ isActive }) => (isActive ? styles.active : "")}>Questions</NavLink>
+            <NavLink to="/questions" replace className={({ isActive }) => (isActive ? styles.active : "")}>Questions</NavLink>
           </li>
           <li>
-            <NavLink to="/tags" className={({ isActive }) => (isActive ? styles.active : "")}>Tags</NavLink>
+            <NavLink to="/tags" replace className={({ isActive }) => (isActive ? styles.active : "")}>Tags</NavLink>
           </li>
           <li>
-            <NavLink to="/question" className={styles.addPost}>+</NavLink>
+            <NavLink to="/question" replace className={styles.addPost}>+</NavLink>
           </li>
         </ul>
       </div>
       <div className={styles.right}>
         {
           token ?
-          <NavLink to="/profile">
-            <img className={styles.profile_picture} src={user?.profile_picture} alt="Profile" />
+          <NavLink to="/profile" replace>
+            <img className={styles.profile_picture} src={user.profile_picture ? user.profile_picture : profile_img} alt="Profile" />
           </NavLink> :
           <CTA title="Get started" className={styles.CTA} onClick={() => navigate("/login", { replace: true })}/>
         }
       </div>
       </div>
-      
     </nav>
   );
 };

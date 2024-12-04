@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -67,7 +67,7 @@ const LoginPage = () => {
         </div>
         <div className={styles.divider}></div>
         <div className={styles.loginForm_right}>
-            <h2 className={styles.logotitle}>LangOverflow</h2>
+            <Link to='/' replace><h2 className={styles.logotitle}>LangOverflow</h2></Link>
             <p>Best language learning site supported by the community</p>
         </div>  
       </div>   

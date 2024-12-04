@@ -1,0 +1,12 @@
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+.tag p {
+    color: var(--background);
+}
+.tag button {
+    border-radius: 0 5px 5px 0 !important;
+}

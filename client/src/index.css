@@ -6,6 +6,10 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
+a {
+  color: var(--text);
+  text-decoration: none;
+}
 :root {
  --primary: #028090;
  --background: #FFFFFF;

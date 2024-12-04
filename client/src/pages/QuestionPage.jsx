@@ -1,53 +1,58 @@
 import { useState } from 'react'
-import styles from './QuestionPage.module.css'
 import { useTagStore } from '../services/store/useTagStore';
-import Tags from '../components/Tags';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { useQuestionService } from '../services/api/useQuestionService';
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import Tag from '../components/Tag';
+import styles from './QuestionPage.module.css'
 const QuestionPage = () => {
-
-  const tagStore = useTagStore();
+  const titles = useTagStore((state) => state.title);
+  const addTag = useTagStore((state) => state.addTag);
   const { errorMessage } = useToastMessage();
   const { question } = useQuestionService();
   const { user } = useAuthContext();
-  
-  
   const [formData, setFormData] = useState({
     title: '',
     content: '',
     currentTag: ''
   });
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(formData.title.length < 5){errorMessage("Title needs atleast 5 letters.");return;}
-    if(formData.content.length < 5){errorMessage("Content needs atleast 10 letters."); return;}
-    if(tagStore.title.length < 1){errorMessage("You need atleast 1 tag in your post");return;}
+    if(formData.title.length < 5) {
+      errorMessage("Title needs atleast 5 letters.");
+      return;
+    }
+    if(formData.content.length < 5) {
+      errorMessage("Content needs atleast 10 letters.");
+      return;
+    }
+    if(titles.length < 1) {
+      errorMessage("You need atleast 1 tag in your post");
+      return;
+    }
     const requestObj = {
       title: formData.title,
       content: formData.content,
       author_id: user.id,
-      tags: tagStore.title
+      tags: titles
     }
     question(requestObj);
   }
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleOnClickTag = () => {
-    if(formData.currentTag.length < 3){
+    if(formData.currentTag.length < 3) {
       errorMessage("Tag needs to have 3 or more characters");
       return;
     }
-    tagStore.addTag(formData.currentTag);
+    if (titles.length + 1 > 5) {
+      errorMessage("Maximum of 5 tags are allowed");
+      return
+    }
+    addTag(formData.currentTag);
     setFormData({...formData, ["currentTag"] : ""});
   }
-
-  
   return (
     <div className={styles.container}>
       <div className={styles.questionForm}>
@@ -67,29 +72,32 @@ const QuestionPage = () => {
           value={formData.content}
         />
         <div className={styles.tagForm}>
-        <input
-          type="text"
-          name="currentTag"
-          placeholder="Add a tag"
-          onChange={handleChange}
-          value={formData.currentTag}
-        />
-        <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
-        <p>*</p> 
-        {/* TOOLTIP Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)  */}
+          <div>
+            <input
+              type="text"
+              name="currentTag"
+              placeholder="Add a tag"
+              onChange={handleChange}
+              value={formData.currentTag}
+            />
+            <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
+          </div>
+          <span className={styles.tooltipIcon}>
+              ?
+              <span className={styles.tooltipText}>
+                Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)
+              </span>
+            </span>
         </div>
-        <div>
-        {tagStore.title.map((title,index) => (
-          <Tags title={title} key={index} id = {index} ></Tags>
+        <div className={styles.tagsWrapper}>
+        {titles.map((title,index) => (
+          <Tag title={title} key={index} id={index} ></Tag>
         ))}
         </div>
         <button type="submit">Post it</button>
       </form>
     </div>
     </div>
-    
-
-  )
+  );
 }
-
 export default QuestionPage

@@ -1,0 +1,33 @@
+.landingPage {
+    position: relative;
+    padding-top: 100px;
+}
+.heroContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 80%;
+    margin: auto;
+}
+.heroContainer h1 {
+    font-size: 6rem;
+}
+.heroContainer p {
+    font-size: 1.5rem;
+    max-width: 50%;
+    text-align: center;
+    margin: auto;
+}
+.CTA {
+    background-color: var(--primary);
+    font-size: 1.2rem;
+}
+.imageWrapper {
+    display: flex;
+    justify-content: space-between;
+
+}

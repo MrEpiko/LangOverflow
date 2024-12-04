@@ -62,6 +62,8 @@
 
 .tagForm {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 20px;
 }
 
@@ -88,4 +90,47 @@ textarea{
     border-radius: 5px;
     font-size: 1rem;
     border: 1px solid var(--text);
+}
+.tagForm div {
+    display: flex;
+    gap: 2rem;
+}
+.tagsWrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tooltipIcon {
+    position: relative;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 2rem;
+    padding: 0 10px;
+    border: 2px solid var(--text);
+    border-radius: 50%;
+    flex: end;
+}
+
+.tooltipIcon:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.tooltipText {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 2rem;
+    background-color: var(--text);
+    color: var(--background);
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 200px;
+    text-align: center;
+    z-index: 10;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
