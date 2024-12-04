@@ -7,7 +7,7 @@ from models.dto.ThreadDto import (
     ThreadSearchDto
 )
 from models.Thread import Thread
-from typing import Annotated
+from typing import Annotated, List
 from services.userService import (
     get_authorization_header,
     get_current_user
@@ -154,3 +154,19 @@ async def search(tags: ThreadSearchDto, request: Request, db: db_dependency, pag
         "total_pages": total_pages,
         "total_threads": total_threads
     }
+
+
+@thread_router.post("/random", response_model=List[Thread])
+async def get_random_threads(request: Request, db: db_dependency, limit: int = Query(10, ge=1)):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    
+    total = await get_thread_collection(db).count_documents({})
+    if limit > total:
+        raise HTTPException(status_code=400, detail="Limit is greater than amount of threads")
+    
+    threads = []
+    async for t in get_thread_collection(db).aggregate([{'$sample': {'size': limit}}]):
+        threads.append(Thread(**t))
+    return threads
