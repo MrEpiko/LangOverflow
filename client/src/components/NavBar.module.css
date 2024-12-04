@@ -8,7 +8,7 @@
     width: 100%;
     padding: 15px 30px;
     background: var(--primary);
-    z-index: 999;
+    z-index: 10;
 }
 .navbar ul {
     display: flex;
@@ -37,9 +37,6 @@
     text-decoration-color: var(--background);
     text-decoration-thickness: 3px;
 }
-.navbar.scrolled {
-    padding: 10px 30px;
-}
 .navbar .left h1 {
     font-family: "Dancing Script", cursive;
     color: var(--background);
@@ -55,12 +52,10 @@
     object-fit: cover;
     border: 2px solid var(--background);
 }
-
 .addPost{
     font-weight: 400 !important;
     font-size: 3rem !important; 
 }
-
 .rightNav{
     display: flex;
     justify-content: center;

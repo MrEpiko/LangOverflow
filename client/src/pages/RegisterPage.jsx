@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
+import flags_img from '../assets/flags_fill.png'
 import styles from './RegisterPage.module.css';
 const RegisterPage = () => {
   const { register, authWithGoogle } = useAuthService();
@@ -75,25 +76,33 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 value={formData.confirm_password}
               />
-              <div className={styles.GoogleLoginCont}>
+              <div className={styles.loginWrapper}>
+                <span>Alrady have an account?</span>
+                <span>
+                  <Link to="/login" replace>Log in</Link>
+                </span>
+              </div>
+              <div className={styles.googleLoginContainer}>
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onError={handleGoogleFailure}
+                  buttonText="Continue with Google"
+                  theme="filled_black"
                 />
               </div>
-              
               <button type="submit">Register</button>      
           </form>
         </div>
         <div className={styles.divider}></div>
-        <div className={styles.loginForm_right}>
-            <h2 className={styles.logotitle}>LangOverflow</h2>
-            <p>Best language learning site supported by the community</p>
-        </div>  
+        <div className={styles.registerForm_right}>
+          <Link to='/' replace><h2 className={styles.logotitle}>LangOverflow</h2></Link>
+          <p>Best language learning site supported by the community</p>
+          <div className={styles.imgWrapper}>
+            <img src={flags_img} alt="" />
+          </div>
+        </div>
       </div>
-      
     </div>
-    
   );
 };
 export default RegisterPage;

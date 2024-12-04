@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const setCurrentUser = (currentUser) => setUser(currentUser);
     const { mutate: getCurrentUser } = useMutation({
         mutationFn: async () => {
-            const response = await apiClient.get("/auth/me", {
+            const response = await apiClient.get("/users/me", {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
