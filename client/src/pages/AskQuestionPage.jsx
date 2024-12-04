@@ -91,7 +91,7 @@ const QuestionPage = () => {
         </div>
         <div className={styles.tagsWrapper}>
         {titles.map((title,index) => (
-          <Tag title={title} key={index} id={index} ></Tag>
+          <Tag title={title} key={index} id={index} whatStore={"tagStore"} ></Tag>
         ))}
         </div>
         <button type="submit">Post it</button>

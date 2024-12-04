@@ -3,10 +3,13 @@ import { useMutation } from "@tanstack/react-query";
 import { createApiClient } from "./apiClient";
 import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom";
+import { useTagSearchStore } from "../store/useTagSearchStore";
+
 export const useQuestionService = () => {
     const apiClient = createApiClient();
     const { successMessage, errorMessage } = useToastMessage();
     const navigate = useNavigate();
+    const titles = useTagSearchStore((state) => state.title);
     const { mutate: question } = useMutation({
         mutationFn: async ({title, content, author_id, tags}) => {
             const response = await apiClient.post('/threads/create', { title, content, author_id, tags });
@@ -42,7 +45,7 @@ export const useQuestionService = () => {
     const inFullFocusQuestionQuery = (threadId) => {
 
         const { data } = useQuery({
-            queryKey: ['userData', threadId],
+            queryKey: ['questionData', threadId],
             queryFn: async () => {
                 if (!threadId) {
                     return null;
@@ -57,5 +60,16 @@ export const useQuestionService = () => {
         
         return data;
     }
-    return {question, userQuestionsQuery, inFullFocusQuestionQuery};
+       const searchQuestionQuery = async () => {
+        
+            const response = await apiClient.post('/threads/search', {
+                "tags": titles.map(element => element.toString())
+            });
+
+         return await response.data;
+        }
+      
+    
+   
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery};
 }
