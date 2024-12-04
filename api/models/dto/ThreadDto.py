@@ -24,3 +24,6 @@ class ThreadDto(BaseModel):
     downvotes: List[int]
     replies: List[ReplyDto] 
     created_at: datetime
+
+class ThreadSearchDto(BaseModel):
+    tags: List[str]

@@ -3,10 +3,11 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from config.db import get_database
 from models.dto.ThreadDto import (
     ThreadCreateDto,
-    ThreadEditDto
+    ThreadEditDto,
+    ThreadSearchDto
 )
 from models.Thread import Thread
-from typing import Annotated, List
+from typing import Annotated
 from services.userService import (
     get_authorization_header,
     get_current_user
@@ -116,14 +117,13 @@ async def downvote_thread(thread_id: int, request: Request, db: db_dependency):
     await thread.sync(db)
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
 
-from collections import defaultdict
-
 @thread_router.post("/search", response_model=dict)
-async def search(tags: List[str], request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
+async def search(tags: ThreadSearchDto, request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     
+    tags = tags.tags
     any_tags_cursor = db.threads.find({"tags": {"$in": tags}})
     threads = []
     async for thread in any_tags_cursor:
