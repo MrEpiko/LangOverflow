@@ -1,4 +1,4 @@
-.container{
+.container {
     width: 100vw;
     height: 100vh;
     background-color: var(--background);
@@ -41,7 +41,7 @@
 .questionForm button {
     padding: 12px;
     background-color: var(--primary);
-    color: white;
+    color: var(--background);
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -53,18 +53,17 @@
     background-color: var(--secondary);
 }
 
-.questionForm h1{
+.questionForm h1 {
     display: flex;
     justify-content: start;
     margin-bottom: 3rem;
     color:var(--text);
-    }
+}
 
 .tagForm {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
 }
 
 .tagForm button {
@@ -82,7 +81,7 @@
     background-color: var(--secondary);
 }
 
-textarea{
+textarea {
     resize: none;
     height: 200px;
     padding:0.5rem;
@@ -93,7 +92,7 @@ textarea{
 }
 .tagForm div {
     display: flex;
-    gap: 2rem;
+    gap: .5rem;
 }
 .tagsWrapper {
     width: 100%;

@@ -1,15 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { useToastMessage } from "../../hooks/useToastMessage";
 import { useMutation } from "@tanstack/react-query";
 import { createApiClient } from "./apiClient";
 import { useQuery } from "@tanstack/react-query"
-
 export const useQuestionService = () => {
     const apiClient = createApiClient();
-
-
-
-    const navigate = useNavigate();
     const { successMessage, errorMessage } = useToastMessage();
     const { mutate: question } = useMutation({
         mutationFn: async ({title, content, author_id, tags}) => {
@@ -24,8 +18,6 @@ export const useQuestionService = () => {
             errorMessage(`Error: ${error}`);
         },
     });
-
-
     const userQuestionsQuery = (userId) => {
 
         const { data } = useQuery({
@@ -34,7 +26,7 @@ export const useQuestionService = () => {
                 if (!userId) {
                     return null;
                 }
-                const response = await apiClient.get(`/auth/${userId}/threads`);
+                const response = await apiClient.get(`/users/${userId}/threads`);
                 return response.data;
             },
             enabled: !!userId, 
@@ -44,10 +36,5 @@ export const useQuestionService = () => {
         
         return data;
     }
-        
     return {question, userQuestionsQuery};
-
-
-
 }
-

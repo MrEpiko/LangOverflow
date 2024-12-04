@@ -11,7 +11,7 @@ export const useAuthService = () => {
     const { Get, Set, Delete } = useLocalStorage();
     const { mutate: login } = useMutation({
         mutationFn: async ({email, password}) => {
-            const response = await apiClient.post('/auth/login', { email, password });
+            const response = await apiClient.post('/users/login', { email, password });
             return response.data;
         },
         onSuccess: (data) => {
@@ -27,7 +27,7 @@ export const useAuthService = () => {
     });
     const { mutate: register } = useMutation({
         mutationFn: async ({ username, email, password }) => {
-            const response = await apiClient.post('/auth/register', { username, email, password });
+            const response = await apiClient.post('/users/register', { username, email, password });
             return response.data;
         },
         onSuccess: (data) => {
@@ -43,7 +43,7 @@ export const useAuthService = () => {
     });
     const { mutate: authWithGoogle } = useMutation({
         mutationFn: async ({ credential }) => {
-            const response = await apiClient.post('/auth/google', { token: credential });
+            const response = await apiClient.post('/users/google', { token: credential });
             return response.data;
         },
         onSuccess: (data) => {
@@ -65,7 +65,7 @@ export const useAuthService = () => {
                 if (!token) {
                     throw new Error('Token not found');
                 }
-                const response = await apiClient.get('/auth/me', {
+                const response = await apiClient.get('/users/me', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
