@@ -1,12 +1,10 @@
 from pydantic import BaseModel, model_validator
 from datetime import datetime, timezone
-from helpers.helper import generate_thread_id
+from helpers.helper import generate_id
 from typing import Optional, List
-from models.dto.ThreadDto import (
-    ThreadEditDto
-)
 from models.dto.ReplyDto import (
-    ReplyDto
+    ReplyDto,
+    ReplyEditDto
 )
 
 class Thread(BaseModel):
@@ -23,7 +21,7 @@ class Thread(BaseModel):
     @model_validator(mode="before")
     def set_defaults(cls, values):
         if 'id' not in values:
-            values['id'] = generate_thread_id()
+            values['id'] = generate_id()
         if 'created_at' not in values:
             values['created_at'] = datetime.now(timezone.utc)
         if 'upvotes' not in values:
@@ -50,6 +48,11 @@ class Thread(BaseModel):
         thread_dict = self.model_dump(exclude_unset=True)
         await db.threads.update_one({"id": thread_dict['id']}, {"$set": thread_dict})
         return self
+    
+    def get_reply(self, reply_id: int) -> ReplyDto:
+        for r in self.replies:
+            if r.id == reply_id: return r
+        return None
 
     class Config:
         json_encoders = {
