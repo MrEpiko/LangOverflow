@@ -7,7 +7,7 @@ import ProfilePage from "../pages/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Pagelayout from "../layouts/Pagelayout";
 import ProtectedRoute from "./ProtectedRoute";
-import QuestionPage from "../pages/QuestionPage";
+import AskQuestionPage from "../pages/AskQuestionPage";
 const routes = [
   {
     path: '/',
@@ -29,11 +29,11 @@ const routes = [
     ),
   },
   {
-  path: '/question',
+  path: '/ask-question',
     element: (
         <ProtectedRoute>
             <Pagelayout>
-                <QuestionPage/>
+                <AskQuestionPage/>
             </Pagelayout>
         </ProtectedRoute>
     )

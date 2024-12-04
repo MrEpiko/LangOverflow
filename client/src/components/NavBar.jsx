@@ -36,7 +36,7 @@ const NavBar = () => {
             <NavLink to="/tags" replace className={({ isActive }) => (isActive ? styles.active : "")}>Tags</NavLink>
           </li>
           <li>
-            <NavLink to="/question" replace className={styles.addPost}>+</NavLink>
+            <NavLink to="/ask-question" replace className={styles.addPost}>+</NavLink>
           </li>
         </ul>
       </div>

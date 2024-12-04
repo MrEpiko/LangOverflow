@@ -4,7 +4,7 @@ import { useToastMessage } from '../hooks/useToastMessage';
 import { useQuestionService } from '../services/api/useQuestionService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import Tag from '../components/Tag';
-import styles from './QuestionPage.module.css'
+import styles from './AskQuestionPage.module.css'
 const QuestionPage = () => {
   const titles = useTagStore((state) => state.title);
   const addTag = useTagStore((state) => state.addTag);
