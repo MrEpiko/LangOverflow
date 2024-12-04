@@ -19,15 +19,15 @@ const QuestionPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(formData.title.length < 5) {
-      errorMessage("Title needs atleast 5 letters.");
+      errorMessage("Title needs at least 5 letters.");
       return;
     }
     if(formData.content.length < 5) {
-      errorMessage("Content needs atleast 10 letters.");
+      errorMessage("Content needs at least 10 letters.");
       return;
     }
     if(titles.length < 1) {
-      errorMessage("You need atleast 1 tag in your post");
+      errorMessage("You need at least 1 tag in your post");
       return;
     }
     const requestObj = {
@@ -85,7 +85,7 @@ const QuestionPage = () => {
           <span className={styles.tooltipIcon}>
               ?
               <span className={styles.tooltipText}>
-                Tag can be a language or type of help that you need. Example for tags: (English, Spanish, synonym, antonym, grammar)
+                Tag can be a language or type of help that you need. Examples for tags: English, Spanish, synonym, antonym, grammar.
               </span>
             </span>
         </div>
