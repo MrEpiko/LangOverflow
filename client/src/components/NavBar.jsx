@@ -24,7 +24,7 @@ const NavBar = () => {
             <NavLink to="/tags" replace className={({ isActive }) => (isActive ? styles.active : "")}>Tags</NavLink>
           </li>
           <li>
-            <NavLink to="/ask-question" replace className={styles.addPost}>+</NavLink>
+            { token && <NavLink to="/ask-question" replace className={styles.addPost}>+</NavLink> }
           </li>
         </ul>
       </div>
