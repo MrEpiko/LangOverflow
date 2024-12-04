@@ -7,7 +7,6 @@ const NumsSection = () => {
   };
   const handleScroll = () => {
     const numItems = document.querySelectorAll('.num');
-    console.log(numItems)
     numItems.forEach((item) => {
       if (isElementInView(item) && !item.classList.contains('visible')) {
         item.classList.add('visible');
