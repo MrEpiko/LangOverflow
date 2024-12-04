@@ -5,6 +5,9 @@ import Tag from '../components/Tag';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { useQuestionService } from '../services/api/useQuestionService';
 import { Link } from 'react-router-dom';
+import QuestionLine from '../components/QuestionLine';
+
+
 
 const Questions = () => {
     const titles = useTagSearchStore((state) => state.title);
@@ -79,14 +82,7 @@ const Questions = () => {
     <button onClick={handleOnClickSearch}>Search</button>
     {datat && Object.keys(datat).length > 0 ? (
     datat.threads.map((thread) => (
-        <Link to={`/questioninfullfocus/${thread.id}`} key={thread.id}>
-            <h1>{thread.title}</h1>
-            <h3>
-                {thread.content.length > 20
-                    ? thread.content.substring(0, 20) + "..."
-                    : thread.content}
-            </h3>
-        </Link>
+      <Link to={`/questioninfullfocus/${thread.id}`}>{<QuestionLine thread={thread}/>}</Link>
     ))
     ) : null}
     </>
