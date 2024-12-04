@@ -9,7 +9,7 @@ from services.userService import (
     authenticate_user,
     get_authorization_header,
 )
-from models.dto.AuthDto import (
+from models.dto.UserDto import (
     UserLoginDto,
     UserRegisterDto,
     UserResponseDto,

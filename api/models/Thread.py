@@ -3,8 +3,10 @@ from datetime import datetime, timezone
 from helpers.helper import generate_id
 from typing import Optional, List
 from models.dto.ReplyDto import (
-    ReplyDto,
-    ReplyEditDto
+    ReplyDto
+)
+from models.dto.UserDto import (
+    UserResponseDto
 )
 
 class Thread(BaseModel):
@@ -12,6 +14,7 @@ class Thread(BaseModel):
     title: str
     content: str
     author_id: Optional[int]
+    author: Optional[UserResponseDto] = None
     tags: List[str]
     upvotes: List[int] = []
     downvotes: List[int] = []
@@ -31,7 +34,7 @@ class Thread(BaseModel):
         if 'replies' not in values:
             values['replies'] = [] 
         if 'author_id' not in values:
-            values['author_id'] = 0
+            values['author_id'] = None
         return values
     
     async def save_to_db(self, db):
