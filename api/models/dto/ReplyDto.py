@@ -2,6 +2,9 @@ from pydantic import BaseModel, model_validator
 from typing import List, Optional
 from datetime import datetime, timezone
 from helpers.helper import generate_id
+from models.dto.UserDto import (
+    UserResponseDto
+)
 
 class ReplyCreateDto(BaseModel):
     parent_id: int
@@ -27,7 +30,8 @@ class ReplyEditDto(BaseModel):
 class ReplyDto(BaseModel):
     id: Optional[int] = None
     parent_id: Optional[int] = None
-    author_id: Optional[int] = None
+    author_id: Optional[int]
+    author: Optional[UserResponseDto] = None
     content: str
     upvotes: List[int]
     downvotes: List[int]
