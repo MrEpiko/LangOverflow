@@ -2,16 +2,19 @@ import { useToastMessage } from "../../hooks/useToastMessage";
 import { useMutation } from "@tanstack/react-query";
 import { createApiClient } from "./apiClient";
 import { useQuery } from "@tanstack/react-query"
+import { useNavigate } from "react-router-dom";
 export const useQuestionService = () => {
     const apiClient = createApiClient();
     const { successMessage, errorMessage } = useToastMessage();
+    const navigate = useNavigate();
     const { mutate: question } = useMutation({
         mutationFn: async ({title, content, author_id, tags}) => {
             const response = await apiClient.post('/threads/create', { title, content, author_id, tags });
             return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             successMessage('You succesfully posted a question');
+            navigate(`/questioninfullfocus/${data.id}`, {replace: true});
         },
         onError: (error) => {
             console.error('Create thread error:', error);
@@ -36,5 +39,23 @@ export const useQuestionService = () => {
         
         return data;
     }
-    return {question, userQuestionsQuery};
+    const inFullFocusQuestionQuery = (threadId) => {
+
+        const { data } = useQuery({
+            queryKey: ['userData', threadId],
+            queryFn: async () => {
+                if (!threadId) {
+                    return null;
+                }
+                const response = await apiClient.get(`/threads/${threadId}`);
+                return response.data;
+            },
+            enabled: !!threadId, 
+            retry: true,
+            refetchOnWindowFocus: false,
+        });
+        
+        return data;
+    }
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery};
 }

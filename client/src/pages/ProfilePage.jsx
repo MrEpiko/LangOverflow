@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useQuestionService } from '../services/api/useQuestionService';
 import styles from './ProfilePage.module.css';
 import profile_img from '../assets/profile.png';
+import { Link } from 'react-router-dom';
 const ProfilePage = () => {
     const { user } = useAuthContext();
     const { logout } = useAuthService();
@@ -23,7 +24,7 @@ const ProfilePage = () => {
             <img className={styles.profile_picture} src={user.profile_picture ? user.profile_picture : profile_img} alt="Profile" />
             <button onClick={logout}>Logout</button>
             {data && data.threads.map((thread) => (
-                <h1 key={thread.id}>{thread.title}</h1>
+                <h1 key={thread.id} ><Link to={`/questioninfullfocus/${thread.id}`}>{thread.title}</Link></h1>
             ))}
         </div>
     );

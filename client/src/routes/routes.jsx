@@ -7,7 +7,9 @@ import ProfilePage from "../pages/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Pagelayout from "../layouts/Pagelayout";
 import ProtectedRoute from "./ProtectedRoute";
-import QuestionPage from "../pages/QuestionPage";
+import AskQuestionPage from "../pages/AskQuestionPage";
+import Questions from "../pages/Questions";
+import QuestionInFullFocus from "../pages/QuestionInFullFocus";
 const routes = [
   {
     path: '/',
@@ -29,15 +31,35 @@ const routes = [
     ),
   },
   {
-  path: '/question',
+  path: '/ask-question',
     element: (
         <ProtectedRoute>
             <Pagelayout>
-                <QuestionPage/>
+                <AskQuestionPage/>
             </Pagelayout>
         </ProtectedRoute>
     )
   },
+  {
+    path: '/questions',
+      element: (
+          <ProtectedRoute>
+              <Pagelayout>
+                  <Questions/>
+              </Pagelayout>
+          </ProtectedRoute>
+      )
+    },
+    {
+      path: '/questioninfullfocus/:id',
+        element: (
+            <ProtectedRoute>
+                <Pagelayout>
+                    <QuestionInFullFocus/>
+                </Pagelayout>
+            </ProtectedRoute>
+        )
+      },
   {
     path: '/login',
     element: 
