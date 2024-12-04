@@ -1,6 +1,5 @@
 .container {
-    width: 100vw;
-    height: 100vh;
+ 
     background-color: var(--background);
     display: flex;
     justify-content: center;
@@ -11,11 +10,8 @@
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 100vh;
     padding: 30px;
     border-radius: 8px;
-
-    padding-top: 10rem;
 }
 
 .questionForm form {

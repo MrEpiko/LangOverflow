@@ -24,8 +24,8 @@ const ProfilePage = () => {
             <img className={styles.profile_picture} src={user.profile_picture ? user.profile_picture : profile_img} alt="Profile" />
             <button onClick={logout}>Logout</button>
             {data && data.threads.map((thread) => (<Link to={`/questioninfullfocus/${thread.id}`}>
-            <h1 key={thread.id} >{thread.title}</h1>
-            <h3 key={thread.id}>{thread.content.length>20?thread.content.substring(0,20)+"...":thread.content}</h3>
+            <h1 key={thread.id+"h111"} >{thread.title}</h1>
+            <h3 key={thread.id+"h333"}>{thread.content.length>20?thread.content.substring(0,20)+"...":thread.content}</h3>
             </Link>))}
         </div>
     );
