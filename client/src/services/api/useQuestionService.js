@@ -12,9 +12,9 @@ export const useQuestionService = () => {
             const response = await apiClient.post('/threads/create', { title, content, author_id, tags });
             return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             successMessage('You succesfully posted a question');
-            navigate('/questions', {replace: true});
+            navigate(`/questioninfullfocus/${data.id}`, {replace: true});
         },
         onError: (error) => {
             console.error('Create thread error:', error);
@@ -39,5 +39,23 @@ export const useQuestionService = () => {
         
         return data;
     }
-    return {question, userQuestionsQuery};
+    const inFullFocusQuestionQuery = (threadId) => {
+
+        const { data } = useQuery({
+            queryKey: ['userData', threadId],
+            queryFn: async () => {
+                if (!threadId) {
+                    return null;
+                }
+                const response = await apiClient.get(`/threads/${threadId}`);
+                return response.data;
+            },
+            enabled: !!threadId, 
+            retry: true,
+            refetchOnWindowFocus: false,
+        });
+        
+        return data;
+    }
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery};
 }
