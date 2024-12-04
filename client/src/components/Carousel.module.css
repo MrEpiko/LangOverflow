@@ -1,29 +1,33 @@
 .carouselContainer {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-.carouselImages {
-    display: flex;
-    animation: scrollImages 5s linear infinite;
-}
-.carouselImage {
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 5px;
-}
-.carouselImage img {
-    width: 120px;
-    height: 60px;
-    object-fit: cover;
-}
-@keyframes scrollImages {
+    width: 100%; /* Full-width container */
+    overflow: hidden; /* Hide anything outside the visible area */
+    position: relative; /* For proper alignment */
+  }
+  
+  .carouselTrack {
+    display: flex; /* Images side by side */
+    animation: scrollInfinite 10s linear infinite; /* Continuous scrolling */
+    gap: 1rem; /* Add spacing between images */
+  }
+  
+  .carouselImage {
+    flex: 0 0 auto; /* No shrinking or growing */
+    width: 150px; /* Set a fixed width for images */
+  }
+  
+  .carouselImage img {
+    display: block;
+    width: 100%; /* Make image fit the container */
+    border-radius: 0.5rem;
+  }
+  
+  /* Continuous Scroll Animation */
+  @keyframes scrollInfinite {
     0% {
-        transform: translateX(0);
+      transform: translateX(0); /* Start at the beginning */
     }
     100% {
-        transform: translateX(-50%);
+      transform: translateX(-101.1%); /* Move by exactly half of the total width */
     }
-}
+  }
+  

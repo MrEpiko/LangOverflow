@@ -15,16 +15,19 @@ import styles from "../components/Carousel.module.css";
 const Carousel = () => {
   const images = [
     serbia_img, bosnia_img, slovenia_img, america_img, canada_img, uk_img, spain_img,
-    finland_img, jamaica_img, norway_img, czech_img, russia_img, polland_img,serbia_img
+    finland_img, jamaica_img, norway_img, czech_img, russia_img, polland_img
   ];
   return (
     <div className={styles.carouselContainer}>
-      <div
-        className={styles.carouselImages}
-      >
-        {images.concat(images).map((image, index) => (
+      <div className={styles.carouselTrack}>
+        {images.map((image, index) => (
           <div key={index} className={styles.carouselImage}>
             <img src={image} alt={`Flag ${index}`} />
+          </div>
+        ))}
+        {images.map((image, index) => (
+          <div key={`duplicate-${index}`} className={styles.carouselImage}>
+            <img src={image} alt={`Flag Duplicate ${index}`} />
           </div>
         ))}
       </div>
