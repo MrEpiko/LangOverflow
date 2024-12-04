@@ -5,6 +5,7 @@ import { useAuthService } from '../services/api/useAuthService';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { validateEmail } from '../utils/utils';
+import flags_img from '../assets/flags_fill.png'
 import styles from './LoginPage.module.css';
 const LoginPage = () => {
   const { token } = useAuthContext();
@@ -38,38 +39,47 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.loginForm}>
         <div className={styles.loginForm_left}>
-          <h2 className={styles.form_title}>Sign in</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="email"
-            placeholder="E-mail"
-            onChange={handleChange}
-            value={formData.email}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            value={formData.password}
-          />
-          <div className={styles.GoogleLoginCont}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleFailure}
+          <h2 className={styles.form_title}>Log in</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              onChange={handleChange}
+              value={formData.email}
             />
-          </div>
-          
-          <button type="submit">Login</button>
-          
-        </form>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              value={formData.password}
+            />
+            <div className={styles.registerWrapper}>
+              <span>Don't have an account?</span>
+              <span>
+                <Link to="/register" replace>Register</Link>
+              </span>
+            </div>
+            <div className={styles.googleLoginContainer}>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleFailure}
+                buttonText="Continue with Google"
+                theme="filled_black"
+              />
+            </div>
+            <button type="submit">Log in</button>
+          </form>
         </div>
         <div className={styles.divider}></div>
         <div className={styles.loginForm_right}>
-            <Link to='/' replace><h2 className={styles.logotitle}>LangOverflow</h2></Link>
-            <p>Best language learning site supported by the community</p>
-        </div>  
+          <Link to='/' replace><h2 className={styles.logotitle}>LangOverflow</h2></Link>
+          <p>Best language learning site supported by the community</p>
+          <div className={styles.imgWrapper}>
+            <img src={flags_img} alt="" />
+          </div>
+        </div>
       </div>   
     </div>
   );  

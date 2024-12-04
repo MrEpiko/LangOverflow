@@ -16,4 +16,5 @@ a {
  --text: #060B15;
  --highlight: #FFC400;
  --secondary: #01252A;
+ --button-gradient: linear-gradient(to bottom right, rgba(2, 130, 145, 1), rgba(1, 40, 45, 1) 100%)
 }
