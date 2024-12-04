@@ -2,7 +2,7 @@ from math import ceil
 from fastapi import APIRouter, Depends, Request, HTTPException, Query
 from motor.motor_asyncio import AsyncIOMotorClient
 from config.db import get_database
-from services.authService import (
+from services.userService import (
     get_user_collection,
     get_current_user,
     generate_access_token,
@@ -18,15 +18,15 @@ from models.Thread import Thread
 from helpers.helper import get_password_hash, validate_email
 from models.Token import Token
 from models.User import User
-from typing import Annotated, Optional, List
+from typing import Annotated, Optional
 import httpx
 import os
 
-auth_router = APIRouter()
+user_router = APIRouter()
 db_dependency = Annotated[AsyncIOMotorClient, Depends(get_database)]
 GOOGLE_TOKEN_URL = os.getenv("GOOGLE_TOKEN_URL", "")
 
-@auth_router.post("/login", response_model=Token)
+@user_router.post("/login", response_model=Token)
 async def login(user: UserLoginDto, db: db_dependency):
     if not validate_email(user.email) or len(user.password) < 5:
         raise HTTPException(status_code=400, detail="Invalid email or password")
@@ -36,7 +36,7 @@ async def login(user: UserLoginDto, db: db_dependency):
     access_token = generate_access_token(db_user.email)
     return Token(access_token=access_token, token_type="bearer")
 
-@auth_router.post("/register", response_model=Token)
+@user_router.post("/register", response_model=Token)
 async def register(user: UserRegisterDto, db: db_dependency):
     if not validate_email(user.email) or len(user.password) < 5 or len(user.username) < 3:
         raise HTTPException(status_code=400, detail="Invalid username, email or password")
@@ -49,7 +49,7 @@ async def register(user: UserRegisterDto, db: db_dependency):
     access_token = generate_access_token(new_user.email)
     return Token(access_token=access_token, token_type="bearer")
 
-@auth_router.get("/me", response_model=UserResponseDto)
+@user_router.get("/me", response_model=UserResponseDto)
 async def auth_user(request: Request, db: db_dependency, access_token: Optional[str] = None):
     authorization_token = get_authorization_header(request)
     if not authorization_token and not access_token:
@@ -57,7 +57,7 @@ async def auth_user(request: Request, db: db_dependency, access_token: Optional[
     user = await get_current_user(authorization_token or access_token, db)
     return UserResponseDto(id=user.id, username=user.username, email=user.email, profile_picture=user.profile_picture)
 
-@auth_router.post("/google", response_model=Token)
+@user_router.post("/google", response_model=Token)
 async def google_login(token: dict, db: db_dependency):
     id_token = token.get("token")
     if not id_token:
@@ -86,7 +86,7 @@ async def google_login(token: dict, db: db_dependency):
         access_token = generate_access_token(db_user["email"])
         return Token(access_token=access_token, token_type="bearer")
 
-@auth_router.get("/{user_id}", response_model=UserResponseDto)
+@user_router.get("/{user_id}", response_model=UserResponseDto)
 async def get_user(user_id: int, request: Request, db: db_dependency):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
@@ -97,7 +97,7 @@ async def get_user(user_id: int, request: Request, db: db_dependency):
     actual_user = User(**user)
     return UserResponseDto(id=actual_user.id, username=actual_user.username, email=actual_user.email, profile_picture=actual_user.profile_picture)
 
-@auth_router.get("/{user_id}/threads", response_model=dict)
+@user_router.get("/{user_id}/threads", response_model=dict)
 async def get_user_threads(user_id: int, request: Request, db: db_dependency, page: int = Query(1, ge=1), limit: int = Query(10, ge=1)):
     authorization_token = get_authorization_header(request)
     if not authorization_token:

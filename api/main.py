@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controllers import authController, threadController, replyController
+from controllers import threadController, replyController, userController
 import os
 app = FastAPI(title="LangOverflow", version="1.0", root_path="/api", debug=True)
 origins = [
@@ -18,7 +18,7 @@ app.add_middleware(
 def ping():
     return {"message": "success", "status": 200}
 
-app.include_router(authController.auth_router, prefix="/auth", tags=["auth"])
+app.include_router(userController.user_router, prefix="/users", tags=["user"])
 app.include_router(threadController.thread_router, prefix="/threads", tags=["threads"])
 app.include_router(replyController.reply_router, prefix="/replies", tags=["replies"])
 

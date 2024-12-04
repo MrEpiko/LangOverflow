@@ -7,7 +7,7 @@ from models.dto.ThreadDto import (
 )
 from models.Thread import Thread
 from typing import Annotated
-from services.authService import (
+from services.userService import (
     get_authorization_header,
     get_current_user
 )
