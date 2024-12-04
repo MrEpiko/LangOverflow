@@ -136,3 +136,7 @@
     text-decoration: underline;
     text-decoration-color: var(--highlight);
 }
+
+.redirect{
+    color: var(--primary) !important;
+}
