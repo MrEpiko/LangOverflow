@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import styles from "./NavBar.module.css";
@@ -6,20 +5,9 @@ import profile_img from "../assets/profile.png";
 import CTA from "./CTA";
 const NavBar = () => {
   const navigate = useNavigate();
-  const [scrolled, setScrolled] = useState(false);
   const { token, user } = useAuthContext();
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) setScrolled(true);
-      else setScrolled(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   return (
-    <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+    <nav className={styles.navbar}>
       <div className={styles.left}>
         <NavLink to="/home" replace><h1>LangOverflow</h1></NavLink>
       </div>

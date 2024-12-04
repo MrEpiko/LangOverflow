@@ -1,0 +1,29 @@
+.carouselContainer {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.carouselImages {
+    display: flex;
+    animation: scrollImages 5s linear infinite;
+}
+.carouselImage {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+}
+.carouselImage img {
+    width: 120px;
+    height: 60px;
+    object-fit: cover;
+}
+@keyframes scrollImages {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
