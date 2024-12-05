@@ -69,7 +69,7 @@
 .tag{
    background-color: var(--primary);
    border-radius: 5px;
-   padding: 0 1rem;
+   padding: 0.1rem 1rem 0.2rem 1rem;
    color: white;
    font-weight: 500;
 }

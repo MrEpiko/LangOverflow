@@ -1,6 +1,7 @@
 .numsSection {
     width: 100%;
     padding: 5rem 2rem 8rem 2rem;
+    background-color: white;
 }
 .numsSection h1 {
     text-align: center;

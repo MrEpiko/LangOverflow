@@ -1,14 +1,15 @@
 .container{
     display: flex;
     justify-content: center;
-    background-color: var(--primary);
+    padding-bottom: 5rem;
+    padding-top: 5rem;
 }
 
 .profileContainer{
     width:50%;
-
     background-color: var(--background);
-    padding: 10rem 1rem;
+    padding: 5rem 1rem 2rem 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3)
 }
 
 .seperator{
