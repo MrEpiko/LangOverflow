@@ -86,6 +86,53 @@ const QuestionInFullFocus = () => {
 
 
   if(!data) return <h1>Loading...</h1>
+  if(data.author == null){
+    return (
+      <div className={styles.container}>
+        <div className={styles.authorThreadContainer}>
+          
+  
+  
+          <div className={styles.infoContainer}>
+           <div className={styles.impressions}>
+            <button onClick={handleUpVote}>Upvote</button>
+            <h2>{upDownNumber}</h2>
+            <button onClick={handleDownVote}>Downvote</button>
+          </div>
+          <div className={styles.border}>
+          <div className={styles.userdata}>
+             <h2>{"Deleted user"}</h2>
+            </div>
+  
+            <div className={styles.threadMainQuestion}>
+              <h1>{data.title}</h1> 
+              <h2>{data.content}</h2>
+            </div>
+  
+          <div className={styles.tagsAndDate}>
+              <div className={styles.tags}>
+                {data.tags.map((tag,index)=>(<h3 key={tag+index} className={styles.tag}>{tag}</h3>) )}
+              </div>
+              <h4>{formatDate(data.created_at)}</h4>
+          </div>      
+          </div>
+            
+          </div>
+          
+          <div className={styles.addReplyContainer}>
+            <h2>Reply to the question</h2>
+            <textarea placeholder="Reply"onChange={handleChange} name='reply' value={formData.reply}></textarea>
+            <button onClick={handleSubmitReply} className={styles.submitReply}>Submit</button>
+            
+          </div>
+          {data.replies.map((x) => <Replies reply={x}/>)}
+        </div>
+        
+      </div>
+    );
+
+  }
+  else{
   return (
     <div className={styles.container}>
       <div className={styles.authorThreadContainer}>
@@ -127,5 +174,6 @@ const QuestionInFullFocus = () => {
       
     </div>
   );
+}
 }
 export default QuestionInFullFocus;
