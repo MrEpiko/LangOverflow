@@ -15,7 +15,6 @@ const { errorMessage } = useToastMessage();
 const [upDownNumber, setUpDownNumber] = useState(0);
 const [status, setStatus] = useState("");
 useEffect(() => {
-  console.log(thread);
 
   setUpDownNumber(data.upvotes.length - data.downvotes.length);
   if (data.upvotes.includes(user.id)) {
@@ -92,7 +91,7 @@ const handleDownVote = async () => {
             }
           </h3>
           <div className={styles.tags}>
-            {thread.tags.map((tag)=>(<h3 className={styles.tag}>{tag}</h3>))}
+            {thread.tags.map((tag,index)=>(<h3 key={index} className={styles.tag}>{tag}</h3>))}
           </div>
       </div>
 

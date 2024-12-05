@@ -6,6 +6,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 80px;
     padding: 15px 30px;
     background: var(--primary);
     z-index: 10;
@@ -22,7 +23,7 @@
     margin: 0 20px;
     position: relative;
 }
-.navbar a {
+.navbar a, .openManu ul li a {
     color: var(--background);
     text-decoration: none;
     font-size: 1.2rem;
@@ -30,11 +31,23 @@
     letter-spacing: 1px;
     position: relative;
 }
+.openManu ul li a::after, nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--highlight);
+    transition: width 0.3s ease-in-out;
+}
+.openManu ul li a:hover::after, .navbar ul li a:hover::after {
+    width: 100%;
+}
 .navbar a.active {
-    color: var(--background);
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-color: var(--background);
+    text-decoration-color: var(--highlight);
     text-decoration-thickness: 3px;
 }
 .navbar .left h1 {
@@ -60,4 +73,47 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.hamburger {
+    display: none;
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.hamburger img {
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+@media (max-width: 760px) {
+    .openManu {
+        background-color: var(--primary);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+    }
+    .openManu ul {
+        list-style: none;
+        text-align: center;
+    }
+    .openManu ul li {
+        padding: 1rem 0;
+    }
+    .middle {
+        display: none;
+    }
+    .navbar {
+        justify-content: space-between;
+    }
+    .hamburger {
+        display: block;
+    }
 }
