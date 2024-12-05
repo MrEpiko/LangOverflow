@@ -1,14 +1,8 @@
 .numsSection {
     width: 100%;
-    padding-top: 5.5rem;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    background-color: white;
+    padding: 5rem 2rem 8rem 2rem;
 }
-.numsSection .title {
+.numsSection h1 {
     text-align: center;
     font-size: 4rem;
     margin-bottom: 4rem;
@@ -50,7 +44,46 @@
     background-color: var(--highlight);
     margin: 5px 0;
 }
+@media (max-width: 991px) {
+    .numsContainer {
+        gap: .5rem;
+    }
+    .numsSection h1 {
+        font-size: 3rem;
+    }
+    .numItem span {
+        font-size: 3rem;
+    }
+    .numItem p {
+        font-size: .8rem;
+    }
+    .numItem .divider {
+        width: 70%;
+    }
+}
 
-.tags{
-    display: flex;
+@media (max-width: 600px) {
+    .numsContainer {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    .numItem span {
+        font-size: 3rem;
+    }
+    .numItem p {
+        font-size: 1rem;
+    }
+}
+@media (max-width: 480px) {
+    .numsContainer {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .numsSection h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    .numsSection {
+        padding: 2.5rem 1rem;
+    }
 }

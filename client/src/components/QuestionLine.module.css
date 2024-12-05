@@ -19,12 +19,12 @@
 }
 
 
-h1{
-   margin: 0 !important;
-   font-size: 2rem !important;
+.cont h1 {
+   margin: 0;
+   font-size: 2rem;
 }
 
-h3{
+.cont h3 {
    font-size: 1rem;
    font-weight: normal;
    margin-bottom: 0.5rem;
