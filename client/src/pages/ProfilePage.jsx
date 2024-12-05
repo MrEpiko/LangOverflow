@@ -8,7 +8,7 @@ import QuestionLine from '../components/QuestionLine';
 import NavBar from '../components/NavBar';
 const ProfilePage = () => {
     const { user } = useAuthContext();
-    const { logout } = useAuthService();
+    const { logout, deleteProfile } = useAuthService();
     const [userId, setUserId] = useState(null);
     const {userQuestionsQuery} = useQuestionService();
     useEffect(() => {
@@ -31,7 +31,10 @@ const ProfilePage = () => {
                         </div>
                         
                     </div>
-                    <button onClick={logout}>Logout</button>
+                    <div className={styles.redOnes}>
+                        <button onClick={logout}>Logout</button>
+                        <button onClick={()=>deleteProfile(userId)}>Delete profile</button>
+                    </div>
                 </div>
                 <h5>Your questions</h5>
                 <div className={styles.questionLines}>

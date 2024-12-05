@@ -63,6 +63,15 @@ h5{
     border-top: 0;
 }
 
+.redOnes{
+    display: flex;
+    flex-direction: column;
+}
+
+.redOnes button{
+    width: 5rem;
+}
+
 @media(max-width:1200px){
     .seperator button{
         width:5rem;

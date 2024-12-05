@@ -134,9 +134,10 @@ export const useQuestionService = () => {
                 errorMessage(`Error: ${error}`);
             },
         });
+        
     
     
     
    
-    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote, createReply,upvoteReply,downvoteReply, deleteReply };
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote, createReply,upvoteReply,downvoteReply, deleteReply  };
 }
