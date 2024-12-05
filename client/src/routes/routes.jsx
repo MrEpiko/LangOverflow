@@ -10,7 +10,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import AskQuestionPage from "../pages/AskQuestionPage";
 import Questions from "../pages/Questions";
 import QuestionInFullFocus from "../pages/QuestionInFullFocus";
-import Loading from "../components/Loading"
 const routes = [
   {
     path: '/',
@@ -79,15 +78,6 @@ const routes = [
                 <ProfilePage/>
         </ProtectedRoute>
     ),
-  },
-  {
-    path: '/loading',
-    element: (
-      <Pagelayout>
-        <Loading/>
-      </Pagelayout>
-    ),
-    errorElement: <NotFoundPage/>,
   },
 ];
 export const router = createBrowserRouter(routes);
