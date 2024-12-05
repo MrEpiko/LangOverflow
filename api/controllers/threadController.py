@@ -150,7 +150,7 @@ async def search(tags: ThreadSearchDto, request: Request, db: db_dependency, pag
     
     tags = tags.tags
     lowercase_tags = []
-    for t in thread.tags: lowercase_tags.append(t.lower())
+    for t in tags: lowercase_tags.append(t.lower())
     any_tags_cursor = db.threads.find({"tags": {"$in": lowercase_tags}})
     threads = []
     async for thread in any_tags_cursor:
