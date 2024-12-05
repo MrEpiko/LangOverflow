@@ -5,8 +5,9 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useQuestionService } from '../services/api/useQuestionService';
 import styles from './QuestionLine.module.css';
 import Tag from './Tag';
+import profile_img from '../assets/profile.png'
 
-const QuestionLine = ({thread}) => {
+const QuestionLine = ({thread, id}) => {
 const { upvote, downvote} = useQuestionService();
 const data = thread;
 const { user } = useAuthContext();
@@ -14,6 +15,8 @@ const { errorMessage } = useToastMessage();
 const [upDownNumber, setUpDownNumber] = useState(0);
 const [status, setStatus] = useState("");
 useEffect(() => {
+  console.log(thread);
+
   setUpDownNumber(data.upvotes.length - data.downvotes.length);
   if (data.upvotes.includes(user.id)) {
     setStatus("UPVOTED");
@@ -68,7 +71,10 @@ const handleDownVote = async () => {
     );
     errorMessage("Failed to downvote the thread.");
   }
+  
 };
+
+
   return (
     <div className={styles.container}>
     <div className={styles.impressions}>
@@ -81,14 +87,20 @@ const handleDownVote = async () => {
         <div className={styles.contentContainer}>
           <h1>{thread.title}</h1>
           <h3>{
-            thread.content.length>20 ? 
-            thread.content.substring(0,20) + "..." : thread.content
+              thread.content.length>20 ? 
+              thread.content.substring(0,20) + "..." : thread.content
             }
           </h3>
-          {thread.tags.map((tag)=>(<Tag title={tag}/>))}
+          <div className={styles.tags}>
+            {thread.tags.map((tag)=>(<h3 className={styles.tag}>{tag}</h3>))}
+          </div>
       </div>
 
       <div className={styles.metaData}>
+        <div className={styles.authordata}>
+          <img className={styles.profilePicture}src={thread.author?.profile_picture && thread.author.profile_picture}></img> 
+          <h3 className={styles.authorUsername}> {thread.author?.username}</h3>
+        </div>
         <h3>Answers:{thread.replies.length}</h3>
       </div>
         
