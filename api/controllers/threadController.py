@@ -53,6 +53,11 @@ async def get_thread(thread_id: int, request: Request, db: db_dependency):
     if not author_element:
         raise HTTPException(status_code=409, detail="Thread author not found")
     actual_thread.author = UserResponseDto(**author_element)
+    actual_replies = []
+    for r in actual_thread.replies:
+        user_element = await db.users.find_one({"id": r.author_id})
+        if not user_element: continue
+        r.author = UserResponseDto(**user_element)
     return actual_thread
 
 @thread_router.patch("/{thread_id}", response_model=Thread)
