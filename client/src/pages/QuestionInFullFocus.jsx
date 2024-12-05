@@ -79,9 +79,11 @@ const QuestionInFullFocus = () => {
   };
   const handleSubmitReply = () => {
     if(formData.reply.length < 10){errorMessage("You need at least 10 letters in a reply!"); return;}
-    console.log(threadId, formData.reply);
+    
     createReply({"parent_id":threadId, "content":formData.reply});
+   setFormData({...formData, ["reply"] : ""});
   }
+
 
   if(!data) return <h1>Loading...</h1>
   return (
@@ -90,7 +92,7 @@ const QuestionInFullFocus = () => {
       <button onClick={handleUpVote}>Upvote</button><h1>{data.title}</h1> <h4>{formatDate(data.created_at)}</h4>
       <h2>{upDownNumber}</h2>{data.tags.map((tag,index)=>(<h3 key={tag+index} >{tag}</h3>))}
       <button onClick={handleDownVote}>Downvote</button><h2>{data.content}</h2>  
-      <h2>Reply to a question</h2><textarea onChange={handleChange} name='reply'></textarea><button onClick={handleSubmitReply}>Submit reply</button>
+      <h2>Reply to a question</h2><textarea onChange={handleChange} name='reply' value={formData.reply}></textarea><button onClick={handleSubmitReply}>Submit reply</button>
       {data.replies.map((x) => <Replies reply={x}/>)}
     </div>
   );

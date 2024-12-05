@@ -7,7 +7,7 @@ import { formatDate } from "../utils/utils";
 
 
 const Replies = ({reply}) => {
-    const { upvoteReply, downvoteReply} = useQuestionService();
+    const { upvoteReply, downvoteReply, deleteReply} = useQuestionService();
 const data = reply;
 const { user } = useAuthContext();
 const { errorMessage } = useToastMessage();
@@ -77,6 +77,15 @@ const handleDownVote = async () => {
     errorMessage("Failed to downvote the reply.");
   }
 }
+
+const handleDeleteReply = () => {
+    const obj = {
+        "id": reply.id,
+        "thread_id": reply.parent_id
+    }
+deleteReply(obj);
+}
+
   return (
     <div>
         <button onClick={handleUpVote}>upvote</button>
@@ -85,6 +94,7 @@ const handleDownVote = async () => {
         {/* <h2>{reply.author}</h2> */}
         <h2>{reply.content}</h2>
         <h2>{formatDate(reply.created_at)}</h2>
+        {user.id == reply.author_id && <button onClick={handleDeleteReply}> Delete reply</button>}
     </div>
   )
 }
