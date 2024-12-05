@@ -4,6 +4,8 @@ import { useToastMessage } from '../hooks/useToastMessage';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useQuestionService } from '../services/api/useQuestionService';
 import styles from './QuestionLine.module.css';
+import Tag from './Tag';
+
 const QuestionLine = ({thread}) => {
 const { upvote, downvote} = useQuestionService();
 const data = thread;
@@ -68,21 +70,31 @@ const handleDownVote = async () => {
   }
 };
   return (
-    <>
+    <div className={styles.container}>
+    <div className={styles.impressions}>
       <button onClick={handleUpVote}>Upvote</button>
-      <p>{upDownNumber}</p>
+        <p>{upDownNumber}</p>
       <button onClick={handleDownVote}>Downvote</button>
-      <Link to={`/questioninfullfocus/${thread.id}`}>
-        <h1>Title:{thread.title}</h1>
-        <h3>Content:{
+    </div>
+      <div className={styles.cont}>
+      <Link className={styles.link}to={`/questioninfullfocus/${thread.id}`}>
+        <div className={styles.contentContainer}>
+          <h1>{thread.title}</h1>
+          <h3>{
             thread.content.length>20 ? 
             thread.content.substring(0,20) + "..." : thread.content
-          }
-        </h3>
-        {thread.tags.map((tag, index)=>(<h3 key={index}>{tag}</h3>))}
+            }
+          </h3>
+          {thread.tags.map((tag)=>(<Tag title={tag}/>))}
+      </div>
+
+      <div className={styles.metaData}>
         <h3>Answers:{thread.replies.length}</h3>
+      </div>
+        
       </Link>
-    </>
+      </div>
+    </div>
   );
 }
 export default QuestionLine;
