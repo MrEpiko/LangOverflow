@@ -121,11 +121,11 @@ const QuestionInFullFocus = () => {
         
         <div className={styles.addReplyContainer}>
           <h2>Reply to the question</h2>
-          <textarea onChange={handleChange} name='reply' value={formData.reply}></textarea>
+          <textarea placeholder="Reply"onChange={handleChange} name='reply' value={formData.reply}></textarea>
           <button onClick={handleSubmitReply} className={styles.submitReply}>Submit</button>
-          {data.replies.map((x) => <Replies reply={x}/>)}
+          
         </div>
-        
+        {data.replies.map((x) => <Replies reply={x}/>)}
       </div>
       
     </div>

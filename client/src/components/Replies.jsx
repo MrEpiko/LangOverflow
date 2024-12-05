@@ -93,11 +93,14 @@ deleteReply(obj);
         <h2>{upDownNumber}</h2>
         <button onClick={handleDownVote}>downvote</button>
       </div>
+      <div className={styles.mainReplyContainer}>
+        <div className={styles.contentContainer}>
+          <h1>{reply.author.username}</h1>
+          <h2>{reply.content}</h2>     
+        </div>
+        {user.id == reply.author_id && <button onClick={handleDeleteReply}>Delete reply</button>}
+      </div>
         
-        <h2>{reply.author}</h2>
-        <h2>{reply.content}</h2>
-        <h2>{formatDate(reply.created_at)}</h2>
-        {user.id == reply.author_id && <button onClick={handleDeleteReply}> Delete reply</button>}
     </div>
   )
 }
