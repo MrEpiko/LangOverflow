@@ -10,7 +10,6 @@ export const useAuthService = () => {
     const { successMessage, errorMessage } = useToastMessage();
     const { Get, Set, Delete } = useLocalStorage();
     const { mutate: login } = useMutation({
-       
         mutationFn: async ({email, password}) => {
             const response = await apiClient.post('/users/login', { email, password });
             return response.data;
@@ -27,7 +26,6 @@ export const useAuthService = () => {
         },
     });
     const { mutate: register } = useMutation({
-    
         mutationFn: async ({ username, email, password }) => {
             const response = await apiClient.post('/users/register', { username, email, password });
             return response.data;
@@ -44,7 +42,6 @@ export const useAuthService = () => {
         },
     });
     const { mutate: authWithGoogle } = useMutation({
-       
         mutationFn: async ({ credential }) => {
             const response = await apiClient.post('/users/google', { token: credential });
             return response.data;
@@ -59,7 +56,6 @@ export const useAuthService = () => {
             console.error('Registration error:', error);
             errorMessage(`Google login failed ${error}`);
         },
-
     });
     const fetchUserProfile = () => {
         const { data } = useQuery({
@@ -84,14 +80,6 @@ export const useAuthService = () => {
         });
         return data;
     }
-    const logout = () => {
-        setAuthToken(null);
-        setCurrentUser({});
-        Delete('token');
-        navigate('/', { replace: true });
-        localStorage.clear();
-        successMessage('Success logout');
-    };
     const { mutate: deleteProfile } = useMutation({
         mutationFn: async (id) => {
             const response = await apiClient.delete(`/users/${id}`);
@@ -110,5 +98,12 @@ export const useAuthService = () => {
             errorMessage(`Error: ${error}`);
         },
     });
+    const logout = () => {
+        setAuthToken(null);
+        setCurrentUser({});
+        Delete('token');
+        navigate('/login', { replace: true });
+        successMessage('Success logout');
+    };
     return { login, register, authWithGoogle, logout, fetchUserProfile, deleteProfile};
 };
