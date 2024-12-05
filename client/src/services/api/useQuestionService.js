@@ -121,9 +121,22 @@ export const useQuestionService = () => {
                 errorMessage(`Error: ${error}`);
             },
         });
+        const { mutate: deleteReply } = useMutation({
+            mutationFn: async (obj) => {
+                const response = await apiClient.delete(`/replies/delete?thread_id=${obj.thread_id}&reply_id=${obj.id}`);
+                return response.data;
+            },
+            onSuccess: () => {
+                successMessage("Succesfully deleted reply!");
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
     
     
     
    
-    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote, createReply,upvoteReply,downvoteReply };
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote, createReply,upvoteReply,downvoteReply, deleteReply };
 }
