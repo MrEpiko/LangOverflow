@@ -81,19 +81,53 @@ const QuestionInFullFocus = () => {
     if(formData.reply.length < 10){errorMessage("You need at least 10 letters in a reply!"); return;}
     
     createReply({"parent_id":threadId, "content":formData.reply});
-   setFormData({...formData, ["reply"] : ""});
+    setFormData({...formData, ["reply"] : ""});
   }
 
 
   if(!data) return <h1>Loading...</h1>
   return (
-    <div>
-      <h2>{data.author.username}</h2><img className={styles.profile_picture} src={data.author.profile_picture ? data.author.profile_picture : profile_img} alt="Profile" />
-      <button onClick={handleUpVote}>Upvote</button><h1>{data.title}</h1> <h4>{formatDate(data.created_at)}</h4>
-      <h2>{upDownNumber}</h2>{data.tags.map((tag,index)=>(<h3 key={tag+index} >{tag}</h3>))}
-      <button onClick={handleDownVote}>Downvote</button><h2>{data.content}</h2>  
-      <h2>Reply to a question</h2><textarea onChange={handleChange} name='reply' value={formData.reply}></textarea><button onClick={handleSubmitReply}>Submit reply</button>
-      {data.replies.map((x) => <Replies reply={x}/>)}
+    <div className={styles.container}>
+      <div className={styles.authorThreadContainer}>
+        
+
+
+        <div className={styles.infoContainer}>
+         <div className={styles.impressions}>
+          <button onClick={handleUpVote}>Upvote</button>
+          <h2>{upDownNumber}</h2>
+          <button onClick={handleDownVote}>Downvote</button>
+        </div>
+        <div className={styles.border}>
+        <div className={styles.userdata}>
+            <img className={styles.profile_picture} src={data.author.profile_picture ? data.author.profile_picture : profile_img} alt="Profile" />
+            <h2>{data.author.username}</h2>
+          </div>
+
+          <div className={styles.threadMainQuestion}>
+            <h1>{data.title}</h1> 
+            <h2>{data.content}</h2>
+          </div>
+
+        <div className={styles.tagsAndDate}>
+            <div className={styles.tags}>
+              {data.tags.map((tag,index)=>(<h3 key={tag+index} className={styles.tag}>{tag}</h3>) )}
+            </div>
+            <h4>{formatDate(data.created_at)}</h4>
+        </div>      
+        </div>
+          
+        </div>
+        
+        <div className={styles.addReplyContainer}>
+          <h2>Reply to the question</h2>
+          <textarea onChange={handleChange} name='reply' value={formData.reply}></textarea>
+          <button onClick={handleSubmitReply} className={styles.submitReply}>Submit</button>
+          {data.replies.map((x) => <Replies reply={x}/>)}
+        </div>
+        
+      </div>
+      
     </div>
   );
 }

@@ -87,11 +87,14 @@ deleteReply(obj);
 }
 
   return (
-    <div>
+    <div className={styles.container}>
+      <div className={styles.impression}>
         <button onClick={handleUpVote}>upvote</button>
         <h2>{upDownNumber}</h2>
         <button onClick={handleDownVote}>downvote</button>
-        {/* <h2>{reply.author}</h2> */}
+      </div>
+        
+        <h2>{reply.author}</h2>
         <h2>{reply.content}</h2>
         <h2>{formatDate(reply.created_at)}</h2>
         {user.id == reply.author_id && <button onClick={handleDeleteReply}> Delete reply</button>}

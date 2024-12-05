@@ -1,0 +1,123 @@
+.container{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.authorThreadContainer{
+   display: flex;
+   justify-content: start;
+   align-items: start;
+   flex-direction: column;
+   background-color: white;
+   width: 50%;
+
+}
+
+.border{
+   border-left: 1px var(--primary) solid;
+   padding-left: 1rem;
+   padding-bottom: 1rem;
+}
+
+.infoContainer{
+   display: flex;
+   gap: 1rem;
+   border-bottom: 1px var(--primary) solid;
+   padding-right: 1rem;
+}
+
+.impressions{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   height: 100%;
+   margin-left: 1rem;
+   padding-top: 0.5rem;
+}
+
+.userdata{
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   gap: 0.5rem;
+   margin-bottom: 0.5rem;
+}
+
+.threadMainQuestion h2{
+   font-size: 1rem;
+   font-weight: 500;
+}
+
+.userdata{
+   padding-top: 0.5rem;
+}
+.userdata img{
+   height: 1.5rem;
+   border-radius: 50%;
+}
+
+.userdata h2{
+   font-size: 0.75rem;
+   font-weight: 600;
+}
+
+.tagsAndDate{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+
+
+.tags{
+   display: flex;
+   gap: 0.25rem;
+}
+
+.tag{
+   background-color: var(--primary);
+   border-radius: 5px;
+   padding: 0.1rem 1rem 0.2rem 1rem;
+   color: white;
+   font-weight: 500;
+}
+
+.threadMainQuestion{
+   margin-bottom: 4rem;
+}
+
+.addReplyContainer{
+   display: flex;
+   justify-content: start;
+   align-items: start;
+   flex-direction: column;
+
+   padding:1rem 2rem 1rem 2rem;
+   width: 100%;
+   border-bottom: 1px var(--primary) solid;
+}
+
+.addReplyContainer h2{
+   margin-bottom: 0.6rem;
+}
+
+.addReplyContainer textarea{
+   width: 100%;
+   margin-bottom: 2rem;
+}
+
+.submitReply{
+   border: 0;
+   background-color: var(--primary);
+   width: 7rem;
+   padding: 0.5rem 1rem;
+   color: white;
+   font-weight: 500;
+}
+
+.submitReply:hover{
+   background-color: var(--secondary);
+   transition: 300ms ease;
+}

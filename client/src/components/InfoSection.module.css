@@ -5,6 +5,7 @@
     align-items: center;
     background: var(--button-gradient);
     padding: 7rem 4rem 5rem 10rem;
+    clip-path: polygon(0 7%, 100% 0, 100% 100%, 0% 100%);
 }
 .leftSide {
     width: 50%;
