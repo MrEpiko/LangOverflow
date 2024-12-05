@@ -1,22 +1,19 @@
-
 import { useQuestionService } from '../services/api/useQuestionService';
-import styles from './QuestionInFullFocus.module.css'
 import { useParams } from 'react-router-dom'
-import { formatDate } from '../utils/formatDate';
-import profile_img from '../assets/profile.png';
+import { formatDate } from '../utils/utils';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
+import profile_img from '../assets/profile.png';
+import styles from './QuestionInFullFocus.module.css'
 const QuestionInFullFocus = () => {
   const { id: threadId } = useParams();
   const { upvote, downvote, inFullFocusQuestionQuery } = useQuestionService();
   const data = inFullFocusQuestionQuery(threadId);
   const { user } = useAuthContext();
   const { errorMessage } = useToastMessage();
-  
   const [upDownNumber, setUpDownNumber] = useState(0);
   const [status, setStatus] = useState("");
-  
   useEffect(() => {
     setUpDownNumber(data.upvotes.length - data.downvotes.length);
     if (data.upvotes.includes(user.id)) {
@@ -27,13 +24,11 @@ const QuestionInFullFocus = () => {
       setStatus("NEUTRAL");
     }
   }, [data, user.id]);
-  
   const handleUpVote = async () => {
     if (status === "UPVOTED") {
       errorMessage("You already upvoted this thread!");
       return;
     }
-  
     const prevStatus = status;
     if (prevStatus === "NEUTRAL") {
       setStatus("UPVOTED");
@@ -42,9 +37,8 @@ const QuestionInFullFocus = () => {
       setStatus("NEUTRAL");
       setUpDownNumber((prev) => prev + 1);
     }
-  
     try {
-      await upvote(threadId);
+      upvote(threadId);
     } catch (error) {
       setStatus(prevStatus);
       setUpDownNumber((prev) =>
@@ -53,13 +47,11 @@ const QuestionInFullFocus = () => {
       errorMessage("Failed to upvote the thread.");
     }
   };
-  
   const handleDownVote = async () => {
     if (status === "DOWNVOTED") {
       errorMessage("You already downvoted this thread!");
       return;
     }
-  
     const prevStatus = status;
     if (prevStatus === "NEUTRAL") {
       setStatus("DOWNVOTED");
@@ -68,9 +60,8 @@ const QuestionInFullFocus = () => {
       setStatus("NEUTRAL");
       setUpDownNumber((prev) => prev - 1);
     }
-  
     try {
-      await downvote(threadId);
+      downvote(threadId);
     } catch (error) {
       setStatus(prevStatus);
       setUpDownNumber((prev) =>
@@ -79,29 +70,14 @@ const QuestionInFullFocus = () => {
       errorMessage("Failed to downvote the thread.");
     }
   };
-  
-    
-
-    if(!data) return(
-        <div>
-
-        <h1>Loading...</h1>
-        </div>
-    )
-
-
-    
-
+  if(!data) return <h1>Loading...</h1>
   return (
     <div>
-            <h2>{data.author.username}</h2><img className={styles.profile_picture} src={data.author.profile_picture ? data.author.profile_picture : profile_img} alt="Profile" />
-            <button onClick={handleUpVote}>Upvote</button><h1>{data.title}</h1> <h4>{formatDate(data.created_at)}</h4>
-            <h2>{upDownNumber}</h2>{data.tags.map((tag,index)=>(<h3 key={tag+index} >{tag}</h3>))}
-            <button onClick={handleDownVote}>Downvote</button><h2>{data.content}</h2>
-            
+      <h2>{data.author.username}</h2><img className={styles.profile_picture} src={data.author.profile_picture ? data.author.profile_picture : profile_img} alt="Profile" />
+      <button onClick={handleUpVote}>Upvote</button><h1>{data.title}</h1> <h4>{formatDate(data.created_at)}</h4>
+      <h2>{upDownNumber}</h2>{data.tags.map((tag,index)=>(<h3 key={tag+index} >{tag}</h3>))}
+      <button onClick={handleDownVote}>Downvote</button><h2>{data.content}</h2>  
     </div>
-  )
-
+  );
 }
-
-export default QuestionInFullFocus
+export default QuestionInFullFocus;

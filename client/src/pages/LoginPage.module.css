@@ -141,48 +141,34 @@
     color: var(--primary) !important;
 }
 
-@media (max-width:1170px){
+@media (max-width:1300px){
     .divider{
         display: none;
     }
-    .loginForm_right{
+    .loginForm_right {
         display: none;
-        width:0%;
+        width: 0%;
     }
     .loginForm_left {
         width:100%;
-        padding-left: 2rem;
+        text-align: center;
+        padding-left: 0;
     }
-}
-
-@media(max-width:825px){
-    .loginForm{
-        width: 75%;
-        height: 50%;
-        display: flex;
+    .loginForm_left form {
         justify-content: center;
         align-items: center;
     }
-}
-
-@media(max-width:540px){
-    .loginForm{
-        width: 90%;
-        height: 55%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .loginForm form button {
+        margin-top: 2rem;
     }
 }
 
-@media(max-height: 800px){
-    .loginForm{
-        height:60%;
+@media(max-width:662px){
+    .loginForm {
+        padding: 2rem 1rem;
+        width: 80%;
     }
-}
-
-@media(max-height: 600px){
-    .loginForm{
-        height: 80%;
+    .loginForm_left input {
+        width: 100%;
     }
 }
