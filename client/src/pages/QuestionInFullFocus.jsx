@@ -6,14 +6,18 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
 import profile_img from '../assets/profile.png';
 import styles from './QuestionInFullFocus.module.css'
+import Replies from '../components/Replies';
 const QuestionInFullFocus = () => {
   const { id: threadId } = useParams();
-  const { upvote, downvote, inFullFocusQuestionQuery } = useQuestionService();
+  const { upvote, downvote, inFullFocusQuestionQuery, createReply} = useQuestionService();
   const data = inFullFocusQuestionQuery(threadId);
   const { user } = useAuthContext();
   const { errorMessage } = useToastMessage();
   const [upDownNumber, setUpDownNumber] = useState(0);
   const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({
+    reply: ''
+  });
   useEffect(() => {
     setUpDownNumber(data.upvotes.length - data.downvotes.length);
     if (data.upvotes.includes(user.id)) {
@@ -70,6 +74,15 @@ const QuestionInFullFocus = () => {
       errorMessage("Failed to downvote the thread.");
     }
   };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmitReply = () => {
+    if(formData.reply.length < 10){errorMessage("You need at least 10 letters in a reply!"); return;}
+    console.log(threadId, formData.reply);
+    createReply({"parent_id":threadId, "content":formData.reply});
+  }
+
   if(!data) return <h1>Loading...</h1>
   return (
     <div>
@@ -77,6 +90,8 @@ const QuestionInFullFocus = () => {
       <button onClick={handleUpVote}>Upvote</button><h1>{data.title}</h1> <h4>{formatDate(data.created_at)}</h4>
       <h2>{upDownNumber}</h2>{data.tags.map((tag,index)=>(<h3 key={tag+index} >{tag}</h3>))}
       <button onClick={handleDownVote}>Downvote</button><h2>{data.content}</h2>  
+      <h2>Reply to a question</h2><textarea onChange={handleChange} name='reply'></textarea><button onClick={handleSubmitReply}>Submit reply</button>
+      {data.replies.map((x) => <Replies reply={x}/>)}
     </div>
   );
 }
