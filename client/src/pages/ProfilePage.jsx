@@ -5,6 +5,7 @@ import { useQuestionService } from '../services/api/useQuestionService';
 import styles from './ProfilePage.module.css';
 import profile_img from '../assets/profile.png';
 import QuestionLine from '../components/QuestionLine';
+import NavBar from '../components/NavBar';
 const ProfilePage = () => {
     const { user } = useAuthContext();
     const { logout } = useAuthService();
@@ -17,18 +18,36 @@ const ProfilePage = () => {
     }, [user]);
     const data = userQuestionsQuery(userId);
     return (
-        <div className={styles.profileCard}>
-            <h3>id: {user.id}</h3>
-            <h3>{user.username}</h3>
-            <h3>{user.email}</h3>
-            <img className={styles.profile_picture} src={user.profile_picture ? user.profile_picture : profile_img} alt="Profile" />
-            <button onClick={logout}>Logout</button>
-            {data && data.threads.map((thread) => (
-                <div key={thread.id}>
-                    <QuestionLine thread={thread}/>
+        <>
+        <NavBar />
+        <div className={styles.container}>
+            <div className={styles.profileContainer}>
+                <div className={styles.seperator}>
+                    <div className={styles.userInfo}>
+                        <img className={styles.profile_picture} src={user.profile_picture ? user.profile_picture : profile_img} alt="Profile" />
+                        <div className={styles.userMeta}>
+                            <h1>{user.username}</h1>
+                            <h3>id: {user.id}</h3>
+                        </div>
+                        
+                    </div>
+                    <button onClick={logout}>Logout</button>
                 </div>
-            ))}
+                <h5>Your questions</h5>
+                <div className={styles.questionLines}>
+                    {data && data.threads.map((thread) => (
+                        <div key={thread.id}>
+                            <QuestionLine thread={thread}/>
+                        </div>
+                    ))}
+                </div>
+                
+                
+            </div>
+            
         </div>
+        </>
+        
     );
 };
 export default ProfilePage;

@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    background-color: white;
 }
 .numsSection .title {
     text-align: center;
