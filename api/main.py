@@ -5,6 +5,7 @@ import os
 app = FastAPI(title="LangOverflow", version="1.0", root_path="/api", debug=True)
 origins = [
     "http://localhost:5173",
+    "https://langoverflow.netlify.app"
 ]
 app.add_middleware(
     CORSMiddleware,
