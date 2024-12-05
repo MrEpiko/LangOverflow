@@ -51,12 +51,13 @@ async def get_thread(thread_id: int, request: Request, db: db_dependency):
     actual_thread = Thread(**thread)
     author_element = await db.users.find_one({"id": actual_thread.author_id})
     if not author_element:
-        raise HTTPException(status_code=409, detail="Thread author not found")
-    actual_thread.author = UserResponseDto(**author_element)
-    for r in actual_thread.replies:
-        user_element = await db.users.find_one({"id": r.author_id})
-        if not user_element: r.author = None
-        else: r.author = UserResponseDto(**user_element)
+        actual_thread.author = None
+    else:
+        actual_thread.author = UserResponseDto(**author_element)
+        for r in actual_thread.replies:
+            user_element = await db.users.find_one({"id": r.author_id})
+            if not user_element: r.author = None
+            else: r.author = UserResponseDto(**user_element)
     return actual_thread
 
 @thread_router.patch("/{thread_id}", response_model=Thread)
@@ -108,16 +109,15 @@ async def upvote_thread(thread_id: int, request: Request, db: db_dependency):
         raise HTTPException(status_code=409, detail="You've already upvoted that thread")
     
     author_element = await db.users.find_one({"id": thread.author_id})
-    if not author_element:
-        raise HTTPException(status_code=409, detail="Thread author not found")
-
+    if not author_element: thread.author = None
+    else: thread.author = UserResponseDto(**author_element)
+    
     response = "NEUTRAL"
     if user.id in thread.downvotes: thread.downvotes.remove(user.id)
     else: 
         response = "SUCCESS"
         thread.upvotes.append(user.id)
     await thread.sync(db)
-    thread.author = UserResponseDto(**author_element)
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
 
 @thread_router.post("/downvote", response_model=dict)
@@ -134,8 +134,8 @@ async def downvote_thread(thread_id: int, request: Request, db: db_dependency):
         raise HTTPException(status_code=409, detail="You've already downvoted that thread")
     
     author_element = await db.users.find_one({"id": thread.author_id})
-    if not author_element:
-        raise HTTPException(status_code=409, detail="Thread author not found")
+    if not author_element: thread.author = None
+    else: thread.author = UserResponseDto(**author_element)
 
     response = "NEUTRAL"
     if user.id in thread.upvotes: thread.upvotes.remove(user.id)
@@ -143,7 +143,6 @@ async def downvote_thread(thread_id: int, request: Request, db: db_dependency):
         response = "SUCCESS"
         thread.downvotes.append(user.id)
     await thread.sync(db)
-    thread.author = UserResponseDto(**author_element)
     return {"response": response, "thread": thread.model_dump(exclude_unset=True)}
 
 @thread_router.post("/search", response_model=dict)
