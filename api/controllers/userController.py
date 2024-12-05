@@ -13,6 +13,8 @@ from models.dto.UserDto import (
     UserLoginDto,
     UserRegisterDto,
     UserResponseDto,
+    UserEditDto,
+    UserPasswordEditDto
 )
 from models.Thread import Thread
 from helpers.helper import get_password_hash, validate_email
@@ -126,3 +128,36 @@ async def get_user_threads(user_id: int, request: Request, db: db_dependency, pa
         "total_pages": total_pages,
         "total_threads": total_threads
     }
+
+@user_router.patch("/update", response_model=User)
+async def update_user(user: UserEditDto, request: Request, db: db_dependency):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    actual_user = await get_current_user(authorization_token, db)
+    actual_user.username = user.username
+    actual_user.email = user.email
+    actual_user.profile_picture = user.profile_picture
+    await actual_user.sync(db)
+    return actual_user
+
+@user_router.patch("/password", response_model=User)
+async def update_user_password(user: UserPasswordEditDto, request: Request, db: db_dependency):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    actual_user = await get_current_user(authorization_token, db)
+    actual_user.password = get_password_hash(user.password)
+    await actual_user.sync(db)
+    return actual_user
+
+@user_router.delete("/{user_id}", response_model=dict)
+async def delete_user(request: Request, db: db_dependency):
+    authorization_token = get_authorization_header(request)
+    if not authorization_token:
+        raise HTTPException(status_code=401, detail="Authorization missing")
+    user = await get_current_user(authorization_token, db)
+    result = await get_user_collection(db).delete_one({"id": user.id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "User deleted successfully"}
