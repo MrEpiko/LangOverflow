@@ -36,16 +36,14 @@ const ProfilePage = () => {
                         <button onClick={()=>deleteProfile(userId)}>Delete profile</button>
                     </div>
                 </div>
-                <h5>Your questions</h5>
-                <div className={styles.questionLines}>
+                <h5>Your questions:</h5>
+                {data.threads.length === 0 ? <h2>You don't have any posted questions.</h2> : <div className={styles.questionLines}>
                     {data && data.threads.map((thread) => (
                         <div key={thread.id}>
                             <QuestionLine thread={thread}/>
                         </div>
                     ))}
-                </div>
-                
-                
+                </div> }
             </div>
             
         </div>
