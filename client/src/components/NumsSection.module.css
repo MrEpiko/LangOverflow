@@ -1,0 +1,51 @@
+.numsSection {
+    width: 100%;
+    padding-top: 5.5rem;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.numsSection .title {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 4rem;
+}
+.numsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+.numItem {
+    max-width: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+}
+.numItem .num {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.numItem.visible .num {
+    opacity: 1;
+    transform: translateY(0);
+}
+.numItem span {
+    font-size: 5rem;
+    font-weight: 700;
+}
+.numItem p {
+    font-size: 1rem;
+    color: #555;
+}
+.numItem .divider {
+    width: 100%;
+    height: 5px;
+    background-color: var(--highlight);
+    margin: 5px 0;
+}

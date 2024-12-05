@@ -68,8 +68,28 @@ export const useQuestionService = () => {
 
          return await response.data;
         }
-      
+        const { mutate: upvote } = useMutation({
+            mutationFn: async (threadId) => {
+                const response = await apiClient.post(`/threads/upvote?thread_id=${threadId}`);
+                return response.data;
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+        const { mutate: downvote } = useMutation({
+            mutationFn: async (threadId) => {
+                const response = await apiClient.post(`/threads/downvote?thread_id=${threadId}`);
+                return response.data;
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+    
     
    
-    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery};
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote};
 }

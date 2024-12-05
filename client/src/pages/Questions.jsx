@@ -5,6 +5,10 @@ import Tag from '../components/Tag';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { useQuestionService } from '../services/api/useQuestionService';
 import { Link } from 'react-router-dom';
+import QuestionLine from '../components/QuestionLine';
+import NavBar from '../components/NavBar';
+
+
 
 const Questions = () => {
     const titles = useTagSearchStore((state) => state.title);
@@ -46,50 +50,45 @@ const Questions = () => {
      
 
   return (
-    <> 
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br> 
-    <h1>Questions</h1>
-    <div className={styles.tagSearch}>
-          <div>
-            <input
-              type="text"
-              name="currentTag"
-              placeholder="Add a tag"
-              onChange={handleChange}
-              value={formData.currentTag}
-            />
-            <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
+    <>
+    <NavBar />
+    <div className={styles.container}> 
+      <div className={styles.searchForm}>
+        <h1>All questions</h1>
+          <div className={styles.tagSearch}>
+                <div className={styles.leftSearch}>
+                  <input
+                    type="text"
+                    name="currentTag"
+                    placeholder="Add a tag"
+                    onChange={handleChange}
+                    value={formData.currentTag}
+                  />
+                  <button type="button" className={styles.tagButton} onClick={handleOnClickTag}>Add</button>
+                </div>
+                <span className={styles.tooltipIcon}>
+                    ?
+                    <span className={styles.tooltipText}>
+                      Tag can be a language or type of help that you need. Examples for tags: English, Spanish, synonym, antonym, grammar.
+                    </span>
+                </span>
           </div>
-          <span className={styles.tooltipIcon}>
-              ?
-              <span className={styles.tooltipText}>
-                Tag can be a language or type of help that you need. Examples for tags: English, Spanish, synonym, antonym, grammar.
-              </span>
-            </span>
-        </div>
-    <div className={styles.tagsWrapper}>
-        {titles.map((title,index) => (
-          <Tag title={title} key={index} id={index} whatStore={"tagSearchStore"} ></Tag>
-        ))}
-    </div>
-    <button onClick={handleOnClickSearch}>Search</button>
-    {datat && Object.keys(datat).length > 0 ? (
-    datat.threads.map((thread) => (
-        <Link to={`/questioninfullfocus/${thread.id}`} key={thread.id}>
-            <h1>{thread.title}</h1>
-            <h3>
-                {thread.content.length > 20
-                    ? thread.content.substring(0, 20) + "..."
-                    : thread.content}
-            </h3>
-        </Link>
-    ))
-    ) : null}
-    </>
+          <div className={styles.tagsWrapper}>
+              {titles.map((title,index) => (
+                <Tag title={title} key={index} id={index} whatStore={"tagSearchStore"} ></Tag>
+              ))}
+          </div>
+          <button className={styles.searchButton}onClick={handleOnClickSearch}>Search</button>
+      </div>
+      <div className={styles.thredsContainer}>
+          {datat && Object.keys(datat).length > 0 ? (
+          datat.threads.map((thread) => (
+            <Link to={`/questioninfullfocus/${thread.id}`}>{<QuestionLine thread={thread}/>}</Link>
+          ))
+          ) : null}
+      </div>
+    </div></>
+    
   )
 }
 

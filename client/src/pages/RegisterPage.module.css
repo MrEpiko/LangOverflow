@@ -136,3 +136,61 @@
     text-decoration: underline;
     text-decoration-color: var(--highlight);
 }
+
+.redirect{
+    color: var(--primary) !important;
+}
+
+@media (max-width:1600px){
+    .divider{
+        display: none;
+    }
+    .registerForm_right{
+        display: none;
+        width:0%;
+    }
+    .registerForm_left {
+        width:100%;
+        padding-left: 2rem;
+    }
+    .registerForm{
+        width: 75%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+    }
+}
+
+@media(max-width:825px){
+    .registerForm{
+        width: 75%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(max-width:540px){
+    .registerForm{
+        width: 90%;
+        height: 55%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(max-height: 800px){
+    .registerForm{
+        height:80%;
+    }
+}
+
+@media(max-height: 600px){
+    .registerForm{
+        height: 100%;
+    }
+}

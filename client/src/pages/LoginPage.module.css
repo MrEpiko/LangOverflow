@@ -135,3 +135,54 @@
     text-decoration: underline;
     text-decoration-color: var(--highlight);
 }
+
+
+.redirect{
+    color: var(--primary) !important;
+}
+
+@media (max-width:1170px){
+    .divider{
+        display: none;
+    }
+    .loginForm_right{
+        display: none;
+        width:0%;
+    }
+    .loginForm_left {
+        width:100%;
+        padding-left: 2rem;
+    }
+}
+
+@media(max-width:825px){
+    .loginForm{
+        width: 75%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(max-width:540px){
+    .loginForm{
+        width: 90%;
+        height: 55%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(max-height: 800px){
+    .loginForm{
+        height:60%;
+    }
+}
+
+@media(max-height: 600px){
+    .loginForm{
+        height: 80%;
+    }
+}

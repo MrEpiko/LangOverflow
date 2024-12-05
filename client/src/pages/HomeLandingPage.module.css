@@ -1,0 +1,17 @@
+.page {
+    position: relative;
+}
+.CTA_hero {
+    background: var(--button-gradient);
+    border: none !important;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    max-width: 400px;
+    padding: 1rem 2rem;
+}
+.CTA_info {
+    background-color: var(--background);
+    color: var(--text);
+    max-width: 150px;
+}
