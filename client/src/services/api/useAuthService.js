@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useToastMessage } from '../../hooks/useToastMessage';
@@ -9,9 +9,7 @@ export const useAuthService = () => {
     const { setCurrentUser, setAuthToken } = useAuthContext();
     const { successMessage, errorMessage } = useToastMessage();
     const { Get, Set, Delete } = useLocalStorage();
-<<<<<<< Updated upstream
     const { mutate: login } = useMutation({
-       
         mutationFn: async ({email, password}) => {
             const response = await apiClient.post('/users/login', { email, password });
             return response.data;
@@ -28,64 +26,37 @@ export const useAuthService = () => {
         },
     });
     const { mutate: register } = useMutation({
-    
         mutationFn: async ({ username, email, password }) => {
-=======
-    const login = async ({email, password}) => {
-        try {
-            const response = await apiClient.post('/users/login', { email, password });
-            const data = await response.data;
-            if (data) {
-                setAuthToken(data.access_token);
-                Set('token', data.access_token);
-                navigate('/', { replace: true });
-                successMessage('Success login');
-            }
-        } catch(error) {
-            errorMessage(error)
-        }
-    }
-    const register = async ({ username, email, password }) => {
-        try {
->>>>>>> Stashed changes
             const response = await apiClient.post('/users/register', { username, email, password });
-            const data = await response.data;
-            if (data) {
-                setAuthToken(data.access_token);
-                Set('token', data.access_token);
-                navigate('/', { replace: true });
-                successMessage('Success login');
-            }
-        }
-        catch (error) {
+            return response.data;
+        },
+        onSuccess: (data) => {
+            setAuthToken(data.access_token);
+            Set('token', data.access_token);
+            navigate('/home', { replace: true });
+            successMessage('Success register');
+        },
+        onError: (error) => {
             console.error('Registration error:', error);
             errorMessage(`Registration error: ${error}`);
-<<<<<<< Updated upstream
         },
     });
     const { mutate: authWithGoogle } = useMutation({
-       
         mutationFn: async ({ credential }) => {
-=======
-        }
-    };
-    const authWithGoogle = async ({ credential }) => {
-        try {
->>>>>>> Stashed changes
             const response = await apiClient.post('/users/google', { token: credential });
             return response.data;
-        }    
-        catch (error) {
-            errorMessage(`Google login failed ${error}`);
-<<<<<<< Updated upstream
         },
-
-    });
-=======
+        onSuccess: (data) => {
+            setAuthToken(data.access_token);
+            Set('token', data.access_token);
+            navigate('/home', { replace: true });
+            successMessage('Success login');
+        },
+        onError: (error) => {
             console.error('Registration error:', error);
-        }
-    };
->>>>>>> Stashed changes
+            errorMessage(`Google login failed ${error}`);
+        },
+    });
     const fetchUserProfile = () => {
         const { data } = useQuery({
             queryKey: ['userProfile'],
@@ -109,14 +80,6 @@ export const useAuthService = () => {
         });
         return data;
     }
-    const logout = () => {
-        setAuthToken(null);
-        setCurrentUser({});
-        Delete('token');
-        navigate('/', { replace: true });
-        localStorage.clear();
-        successMessage('Success logout');
-    };
     const { mutate: deleteProfile } = useMutation({
         mutationFn: async (id) => {
             const response = await apiClient.delete(`/users/${id}`);
@@ -135,5 +98,12 @@ export const useAuthService = () => {
             errorMessage(`Error: ${error}`);
         },
     });
+    const logout = () => {
+        setAuthToken(null);
+        setCurrentUser({});
+        Delete('token');
+        navigate('/login', { replace: true });
+        successMessage('Success logout');
+    };
     return { login, register, authWithGoogle, logout, fetchUserProfile, deleteProfile};
 };

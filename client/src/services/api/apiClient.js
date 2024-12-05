@@ -11,14 +11,12 @@ export const createApiClient = () => {
        apiClient.interceptors.request.use(
             config => {
                 if (token) {
-                    
                     config.headers['Authorization'] = `Bearer ${token}`;
                 }
                 return config;
             },
             error => Promise.reject(error)
         );
-        
     return apiClient;
 };
 export default apiClient;
