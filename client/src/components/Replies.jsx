@@ -1,22 +1,19 @@
+import styles from "./Replies.module.css"
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useToastMessage } from '../hooks/useToastMessage';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useQuestionService } from '../services/api/useQuestionService';
-import styles from './QuestionLine.module.css';
-import Tag from './Tag';
-import profile_img from '../assets/profile.png'
+import { formatDate } from "../utils/utils";
 
-const QuestionLine = ({thread, id}) => {
-const { upvote, downvote} = useQuestionService();
-const data = thread;
+
+const Replies = ({reply}) => {
+    const { upvoteReply, downvoteReply, deleteReply} = useQuestionService();
+const data = reply;
 const { user } = useAuthContext();
 const { errorMessage } = useToastMessage();
 const [upDownNumber, setUpDownNumber] = useState(0);
 const [status, setStatus] = useState("");
 useEffect(() => {
-  console.log(thread);
-
   setUpDownNumber(data.upvotes.length - data.downvotes.length);
   if (data.upvotes.includes(user.id)) {
     setStatus("UPVOTED");
@@ -28,7 +25,7 @@ useEffect(() => {
 }, [data, user.id]);
 const handleUpVote = async () => {
   if (status === "UPVOTED") {
-    errorMessage("You already upvoted this thread!");
+    errorMessage("You already upvoted this reply!");
     return;
   }
   const prevStatus = status;
@@ -40,18 +37,22 @@ const handleUpVote = async () => {
     setUpDownNumber((prev) => prev + 1);
   }
   try {
-    upvote(thread.id);
+    const obj = {
+        "id": reply.id,
+        "thread_id": reply.parent_id
+    }
+    upvoteReply(obj);
   } catch (error) {
     setStatus(prevStatus);
     setUpDownNumber((prev) =>
       prevStatus === "NEUTRAL" ? prev - 1 : prev - 1
     );
-    errorMessage("Failed to upvote the thread.");
+    errorMessage("Failed to upvote the reply.");
   }
 };
 const handleDownVote = async () => {
   if (status === "DOWNVOTED") {
-    errorMessage("You already downvoted this thread!");
+    errorMessage("You already downvoted this reply!");
     return;
   }
   const prevStatus = status;
@@ -63,50 +64,43 @@ const handleDownVote = async () => {
     setUpDownNumber((prev) => prev - 1);
   }
   try {
-    downvote(thread.id);
+    const obj = {
+        "id": reply.id,
+        "thread_id": reply.parent_id
+    }
+    downvoteReply(obj);
   } catch (error) {
     setStatus(prevStatus);
     setUpDownNumber((prev) =>
       prevStatus === "NEUTRAL" ? prev + 1 : prev + 1
     );
-    errorMessage("Failed to downvote the thread.");
+    errorMessage("Failed to downvote the reply.");
   }
-  
-};
+}
 
+const handleDeleteReply = () => {
+    const obj = {
+        "id": reply.id,
+        "thread_id": reply.parent_id
+    }
+deleteReply(obj);
+}
 
   return (
     <div className={styles.container}>
-    <div className={styles.impressions}>
-      <button onClick={handleUpVote}>Upvote</button>
-        <p>{upDownNumber}</p>
-      <button onClick={handleDownVote}>Downvote</button>
-    </div>
-      <div className={styles.cont}>
-      <Link className={styles.link}to={`/questioninfullfocus/${thread.id}`}>
-        <div className={styles.contentContainer}>
-          <h1>{thread.title}</h1>
-          <h3>{
-              thread.content.length>20 ? 
-              thread.content.substring(0,20) + "..." : thread.content
-            }
-          </h3>
-          <div className={styles.tags}>
-            {thread.tags.map((tag)=>(<h3 className={styles.tag}>{tag}</h3>))}
-          </div>
-      </div>
-
-      <div className={styles.metaData}>
-        <div className={styles.authordata}>
-          <img className={styles.profilePicture}src={thread.author?.profile_picture && thread.author.profile_picture}></img> 
-          <h3 className={styles.authorUsername}> {thread.author?.username}</h3>
-        </div>
-        <h3>Answers:{thread.replies.length}</h3>
+      <div className={styles.impression}>
+        <button onClick={handleUpVote}>upvote</button>
+        <h2>{upDownNumber}</h2>
+        <button onClick={handleDownVote}>downvote</button>
       </div>
         
-      </Link>
-      </div>
+        <h2>{reply.author}</h2>
+        <h2>{reply.content}</h2>
+        <h2>{formatDate(reply.created_at)}</h2>
+        {user.id == reply.author_id && <button onClick={handleDeleteReply}> Delete reply</button>}
     </div>
-  );
+  )
 }
-export default QuestionLine;
+
+
+export default Replies;

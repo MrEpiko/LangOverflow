@@ -1,0 +1,15 @@
+.container{
+   width: 100%;
+   display: flex; 
+}
+
+.impression{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   height: 100%;
+   margin-left: 1rem;
+   padding-top: 0.5rem;
+}
+

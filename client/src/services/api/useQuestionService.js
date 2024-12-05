@@ -88,8 +88,55 @@ export const useQuestionService = () => {
                 errorMessage(`Error: ${error}`);
             },
         });
+        const { mutate: createReply } = useMutation({
+            mutationFn: async (obj) => {
+                const response = await apiClient.post('/replies/create',obj);
+                return response.data;
+            },
+            onSuccess: () =>{
+                successMessage('Succesfully posted a reply!');
+            },
+            onError: (error) => {
+                console.error('Reply creation error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+        const { mutate: upvoteReply } = useMutation({
+            mutationFn: async (obj) => {
+                const response = await apiClient.post(`/replies/upvote?thread_id=${obj.thread_id}&reply_id=${obj.id}`);
+                return response.data;
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+        const { mutate: downvoteReply } = useMutation({
+            mutationFn: async (obj) => {
+                const response = await apiClient.post(`/replies/downvote?thread_id=${obj.thread_id}&reply_id=${obj.id}`);
+                return response.data;
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+        const { mutate: deleteReply } = useMutation({
+            mutationFn: async (obj) => {
+                const response = await apiClient.delete(`/replies/delete?thread_id=${obj.thread_id}&reply_id=${obj.id}`);
+                return response.data;
+            },
+            onSuccess: () => {
+                successMessage("Succesfully deleted reply!");
+            },
+            onError: (error) => {
+                console.error('Upvote error:', error);
+                errorMessage(`Error: ${error}`);
+            },
+        });
+    
     
     
    
-    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote};
+    return {question, userQuestionsQuery, inFullFocusQuestionQuery, searchQuestionQuery, upvote, downvote, createReply,upvoteReply,downvoteReply, deleteReply };
 }

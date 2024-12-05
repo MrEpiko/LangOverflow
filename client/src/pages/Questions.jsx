@@ -51,7 +51,6 @@ const Questions = () => {
 
   return (
     <>
-    <NavBar />
     <div className={styles.container}> 
       <div className={styles.searchForm}>
         <h1>All questions</h1>
@@ -82,8 +81,8 @@ const Questions = () => {
       </div>
       <div className={styles.thredsContainer}>
           {datat && Object.keys(datat).length > 0 ? (
-          datat.threads.map((thread) => (
-          (<QuestionLine thread={thread}/>)
+          datat.threads.map((thread, index) => (
+             (<QuestionLine thread={thread} id={index}/>)
           ))
           ) : null}
       </div>

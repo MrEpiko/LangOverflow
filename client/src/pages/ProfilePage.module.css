@@ -1,15 +1,15 @@
 .container{
-    height: 100vh;
     display: flex;
     justify-content: center;
-    background-color: var(--primary);
+    padding-bottom: 5rem;
+    padding-top: 5rem;
 }
 
 .profileContainer{
     width:50%;
-
     background-color: var(--background);
-    padding: 10rem 1rem;
+    padding: 5rem 1rem 2rem 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 .seperator{
@@ -62,3 +62,41 @@ h5{
     border:1px var(--primary) solid;
     border-top: 0;
 }
+
+@media(max-width:1200px){
+    .seperator button{
+        width:5rem;
+    }
+}
+
+@media(max-width:800px){
+
+    .profileContainer{
+        width:70%;
+    }
+}
+
+@media(max-width:550px){
+    .profileContainer{
+        width:90%;
+    }
+}
+
+@media(max-width:350px){
+    .profileContainer{
+        width:100%;
+    }
+}
+
+@media(max-width:350px){
+    .userMeta h1{
+        font-size: 1rem !important;
+    }
+
+    .userInfo img{
+        height: 2.5rem;
+    }
+}
+
+
+
