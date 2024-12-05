@@ -89,19 +89,16 @@ const QuestionInFullFocus = () => {
   return (
     <div className={styles.container}>
       <div className={styles.authorThreadContainer}>
-        
-
-
         <div className={styles.infoContainer}>
          <div className={styles.impressions}>
           <button onClick={handleUpVote}>Upvote</button>
           <h2>{upDownNumber}</h2>
           <button onClick={handleDownVote}>Downvote</button>
         </div>
-        <div className={styles.border}>
-        <div className={styles.userdata}>
-            <img className={styles.profile_picture} src={data.author.profile_picture ? data.author.profile_picture : profile_img} alt="Profile" />
-            <h2>{data.author.username}</h2>
+          <div className={styles.border}>
+          <div className={styles.userdata}>
+            <img className={styles.profile_picture} src={data.author?.profile_picture ? data.author?.profile_picture : profile_img} alt="Profile" />
+            <h2>{data.author?.username}</h2>
           </div>
 
           <div className={styles.threadMainQuestion}>

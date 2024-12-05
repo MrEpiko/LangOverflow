@@ -95,7 +95,7 @@ deleteReply(obj);
       </div>
       <div className={styles.mainReplyContainer}>
         <div className={styles.contentContainer}>
-          <h1>{reply.author.username}</h1>
+          <h1>{reply.author?.username}</h1>
           <h2>{reply.content}</h2>     
         </div>
         {user.id == reply.author_id && <button onClick={handleDeleteReply}>Delete reply</button>}

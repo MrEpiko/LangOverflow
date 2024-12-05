@@ -2,6 +2,7 @@
    display: flex;
    justify-content: center;
    align-items: center;
+   background-color: var(--primary);
 }
 
 .authorThreadContainer{
@@ -11,13 +12,16 @@
    flex-direction: column;
    background-color: white;
    width: 50%;
-
+   border: 1px var(--primary) solid;
+   border-bottom: 0;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 .border{
    border-left: 1px var(--primary) solid;
    padding-left: 1rem;
    padding-bottom: 1rem;
+   width:100%;
 }
 
 .infoContainer{
@@ -25,6 +29,7 @@
    gap: 1rem;
    border-bottom: 1px var(--primary) solid;
    padding-right: 1rem;
+   width: 100%;
 }
 
 .impressions{
@@ -67,6 +72,7 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+   width: 100%;
 }
 
 
