@@ -1,17 +1,22 @@
 .numsSection {
     width: 100%;
-    padding: 4rem 2rem;
+    padding-top: 5.5rem;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }
 .numsSection .title {
     text-align: center;
     font-size: 4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
 }
 .numsContainer {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 5rem;
 }
 .numItem {
     max-width: 300px;

@@ -1,5 +1,4 @@
 .container {
- 
     background-color: var(--background);
     display: flex;
     justify-content: center;
@@ -128,4 +127,37 @@ textarea {
     text-align: center;
     z-index: 10;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+@media(max-width:1700px){
+    .questionForm{
+        width: 70%; 
+
+    }
+}
+
+@media(max-width:1000px){
+    .questionForm{
+        width: 85%; 
+        padding-top: 6%; 
+        padding-left: 4rem;
+    }
+
+    .container{
+        display: block;
+        width: 100%;
+    }
+}
+
+@media(max-width:500px){
+    .questionForm{
+        width: 100%; 
+        padding-top: 6%; 
+        padding-left: 2rem;
+    }
+
+    .container{
+        margin-left: 2rem;
+        width: 100%;
+    }
 }

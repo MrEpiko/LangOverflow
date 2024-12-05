@@ -9,6 +9,7 @@
     max-width: 80%;
     margin: auto;
     z-index: 2;
+    padding-top: 10rem; 
 }
 .heroContainer h1 {
     font-size: 5rem;
@@ -16,6 +17,7 @@
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
+    font-weight: 650;
 }
 .heroContainer p {
     font-size: 1.5rem;
@@ -106,9 +108,10 @@
     }
 }
 @media (max-width: 480px) {
-    .imageWrapper div {
-        width: 50%;
+    .imageWrapper div img {
+        width:50%;
     }
+
     .heroContainer h1 {
         font-size: 2rem;
     }
