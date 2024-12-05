@@ -5,6 +5,8 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useQuestionService } from '../services/api/useQuestionService';
 import { formatDate } from "../utils/utils";
 
+import up from '../assets/svg/up.svg';
+import down from '../assets/svg/down.svg';
 
 const Replies = ({reply}) => {
     const { upvoteReply, downvoteReply, deleteReply} = useQuestionService();
@@ -90,9 +92,9 @@ if(reply.author == null){
   return (
     <div className={styles.container}>
       <div className={styles.impression}>
-        <button onClick={handleUpVote}>upvote</button>
+      <button onClick={handleUpVote}><img src={up} alt="" /></button>
         <h2>{upDownNumber}</h2>
-        <button onClick={handleDownVote}>downvote</button>
+      <button onClick={handleDownVote}><img src={down} alt="" /></button>
       </div>
       <div className={styles.mainReplyContainer}>
         <div className={styles.contentContainer}>
@@ -104,13 +106,12 @@ if(reply.author == null){
     </div>
   )
 }
-else{
   return (
     <div className={styles.container}>
       <div className={styles.impression}>
-        <button onClick={handleUpVote}>upvote</button>
+      <button onClick={handleUpVote}><img src={up} alt="" /></button>
         <h2>{upDownNumber}</h2>
-        <button onClick={handleDownVote}>downvote</button>
+      <button onClick={handleDownVote}><img src={down} alt="" /></button>
       </div>
       <div className={styles.mainReplyContainer}>
         <div className={styles.contentContainer}>
@@ -122,7 +123,6 @@ else{
         
     </div>
   )
-}
 }
 
 

@@ -4,6 +4,8 @@ import { useToastMessage } from '../hooks/useToastMessage';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useQuestionService } from '../services/api/useQuestionService';
 import styles from './QuestionLine.module.css';
+import up from '../assets/svg/up.svg';
+import down from '../assets/svg/down.svg';
 import Tag from './Tag';
 import profile_img from '../assets/profile.png'
 
@@ -77,9 +79,9 @@ const handleDownVote = async () => {
   return (
     <div className={styles.container}>
     <div className={styles.impressions}>
-      <button onClick={handleUpVote}>Upvote</button>
+      <button onClick={handleUpVote}><img src={up} alt="" /></button>
         <p>{upDownNumber}</p>
-      <button onClick={handleDownVote}>Downvote</button>
+      <button onClick={handleDownVote}><img src={down} alt="" /></button>
     </div>
       <div className={styles.cont}>
       <Link className={styles.link}to={`/questioninfullfocus/${thread.id}`}>

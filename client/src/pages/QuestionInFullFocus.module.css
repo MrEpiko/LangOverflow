@@ -16,7 +16,12 @@
    border-bottom: 0;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
-
+.impressions button {
+   background-color: transparent;
+   overflow: hidden;
+   border: none;
+   cursor: pointer;
+}
 .border{
    border-left: 1px var(--primary) solid;
    padding-left: 1rem;

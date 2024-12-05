@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import profile_img from '../assets/profile.png';
 import styles from './QuestionInFullFocus.module.css'
 import Replies from '../components/Replies';
+import up from '../assets/svg/up.svg';
+import down from '../assets/svg/down.svg';
 const QuestionInFullFocus = () => {
   const { id: threadId } = useParams();
   const { upvote, downvote, inFullFocusQuestionQuery, createReply} = useQuestionService();
@@ -95,9 +97,9 @@ const QuestionInFullFocus = () => {
   
           <div className={styles.infoContainer}>
            <div className={styles.impressions}>
-            <button onClick={handleUpVote}>Upvote</button>
+            <button onClick={handleUpVote}><img src={up} alt="" /></button>
             <h2>{upDownNumber}</h2>
-            <button onClick={handleDownVote}>Downvote</button>
+      <button onClick={handleDownVote}><img src={down} alt="" /></button>
           </div>
           <div className={styles.border}>
           <div className={styles.userdata}>
@@ -138,9 +140,9 @@ const QuestionInFullFocus = () => {
       <div className={styles.authorThreadContainer}>
         <div className={styles.infoContainer}>
          <div className={styles.impressions}>
-          <button onClick={handleUpVote}>Upvote</button>
+            <button onClick={handleUpVote}><img src={up} alt="" /></button>
           <h2>{upDownNumber}</h2>
-          <button onClick={handleDownVote}>Downvote</button>
+      <button onClick={handleDownVote}><img src={down} alt="" /></button>
         </div>
           <div className={styles.border}>
           <div className={styles.userdata}>

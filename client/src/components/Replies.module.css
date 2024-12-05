@@ -17,7 +17,12 @@
 
 }
 
-
+.impression button {
+   background-color: transparent;
+   overflow: hidden;
+   border: none;
+   cursor: pointer;
+}
 .contentContainer h1{
    font-size: 1.6rem;
    font-weight: 550;
