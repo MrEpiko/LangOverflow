@@ -32,7 +32,7 @@ const NumsSection = () => {
   }, []);
   return (
     <section className={styles.numsSection}>
-        <h1 className={styles.title}>Did you know?</h1>
+        <h1>Did you know?</h1>
         <div className={styles.numsContainer}>
           <div className={styles.numItem}>
             <div>

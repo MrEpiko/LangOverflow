@@ -81,6 +81,9 @@
     }
 }
 @media (max-width: 1224px) {
+    .heroContainer {
+        padding-top: 3rem;
+    }
     .heroContainer h1 {
         font-size: 3rem;
     }
@@ -98,7 +101,7 @@
     }
     .heroContainer {
         max-width: 100%;
-        margin: 0;
+        margin: 1.5rem 0.5rem;
     }
     .heroContainer h1 {
         font-size: 2.5rem;
@@ -108,11 +111,13 @@
     }
 }
 @media (max-width: 480px) {
-    .imageWrapper div img {
-        width:50%;
-    }
-
     .heroContainer h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+    .heroContainer p {
+        max-width: 80%;
+    }
+    .imageWrapper {
+        min-height: 400px;
     }
 }

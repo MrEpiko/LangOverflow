@@ -34,3 +34,41 @@
     height: 100%;
     object-fit: cover;
 }
+@media (max-width: 1270px) {
+    .leftSide h1 {
+        font-size: 2rem;
+    }
+    .leftSide p {
+        font-size: 1rem;
+        margin: 1rem 0 3rem 0;
+    }
+    .infoSection {
+        padding: 4rem;
+    }
+}
+@media (max-width: 860px) {
+    .leftSide p {
+        font-size: 0.8rem;
+        margin: 1rem 0;
+    }
+}
+@media (max-width: 760px) {
+  .infoSection {
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+  .leftSide {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+}
+@media (max-width: 480px) {
+    .infoSection {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .leftSide h1 {
+        font-size: 1.5rem;
+    }
+}
