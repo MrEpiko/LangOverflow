@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useToastMessage } from '../../hooks/useToastMessage';
@@ -9,6 +9,7 @@ export const useAuthService = () => {
     const { setCurrentUser, setAuthToken } = useAuthContext();
     const { successMessage, errorMessage } = useToastMessage();
     const { Get, Set, Delete } = useLocalStorage();
+<<<<<<< Updated upstream
     const { mutate: login } = useMutation({
        
         mutationFn: async ({email, password}) => {
@@ -29,38 +30,62 @@ export const useAuthService = () => {
     const { mutate: register } = useMutation({
     
         mutationFn: async ({ username, email, password }) => {
+=======
+    const login = async ({email, password}) => {
+        try {
+            const response = await apiClient.post('/users/login', { email, password });
+            const data = await response.data;
+            if (data) {
+                setAuthToken(data.access_token);
+                Set('token', data.access_token);
+                navigate('/', { replace: true });
+                successMessage('Success login');
+            }
+        } catch(error) {
+            errorMessage(error)
+        }
+    }
+    const register = async ({ username, email, password }) => {
+        try {
+>>>>>>> Stashed changes
             const response = await apiClient.post('/users/register', { username, email, password });
-            return response.data;
-        },
-        onSuccess: (data) => {
-            setAuthToken(data.access_token);
-            Set('token', data.access_token);
-            navigate('/home', { replace: true });
-            successMessage('Success register');
-        },
-        onError: (error) => {
+            const data = await response.data;
+            if (data) {
+                setAuthToken(data.access_token);
+                Set('token', data.access_token);
+                navigate('/', { replace: true });
+                successMessage('Success login');
+            }
+        }
+        catch (error) {
             console.error('Registration error:', error);
             errorMessage(`Registration error: ${error}`);
+<<<<<<< Updated upstream
         },
     });
     const { mutate: authWithGoogle } = useMutation({
        
         mutationFn: async ({ credential }) => {
+=======
+        }
+    };
+    const authWithGoogle = async ({ credential }) => {
+        try {
+>>>>>>> Stashed changes
             const response = await apiClient.post('/users/google', { token: credential });
             return response.data;
-        },
-        onSuccess: (data) => {
-            setAuthToken(data.access_token);
-            Set('token', data.access_token);
-            navigate('/home', { replace: true });
-            successMessage('Success login');
-        },
-        onError: (error) => {
-            console.error('Registration error:', error);
+        }    
+        catch (error) {
             errorMessage(`Google login failed ${error}`);
+<<<<<<< Updated upstream
         },
 
     });
+=======
+            console.error('Registration error:', error);
+        }
+    };
+>>>>>>> Stashed changes
     const fetchUserProfile = () => {
         const { data } = useQuery({
             queryKey: ['userProfile'],
