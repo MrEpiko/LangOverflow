@@ -29,7 +29,10 @@ async def create_thread(thread: ThreadCreateDto, request: Request, db: db_depend
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
     user = await get_current_user(authorization_token, db)
+    lowercase_tags = []
+    for t in thread.tags: lowercase_tags.append(t.lower())
     new_thread = Thread(**thread.model_dump())
+    new_thread.tags = lowercase_tags
     new_thread.author_id = user.id
     await new_thread.save_to_db(db)
     user.created_threads.append(new_thread.id)
@@ -146,7 +149,9 @@ async def search(tags: ThreadSearchDto, request: Request, db: db_dependency, pag
         raise HTTPException(status_code=401, detail="Authorization missing")
     
     tags = tags.tags
-    any_tags_cursor = db.threads.find({"tags": {"$in": tags}})
+    lowercase_tags = []
+    for t in thread.tags: lowercase_tags.append(t.lower())
+    any_tags_cursor = db.threads.find({"tags": {"$in": lowercase_tags}})
     threads = []
     async for thread in any_tags_cursor:
         threads.append(thread)
