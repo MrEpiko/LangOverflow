@@ -52,11 +52,12 @@
     transition: 300ms ease;
 }
 
-.questionLines h5{
+.yourQuestions{
     text-align: center;
     font-weight: 600;
     font-size: 2rem;
     margin-bottom: 1rem;
+    border:0;
 }
 .dontHave {
     text-align: center;
@@ -64,6 +65,10 @@
 .questionLines{
     border:1px var(--primary) solid;
     border-top: 0;
+}
+
+.border{
+    
 }
 
 .redOnes{
