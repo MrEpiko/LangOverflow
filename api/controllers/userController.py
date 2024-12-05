@@ -142,7 +142,7 @@ async def update_user(user: UserEditDto, request: Request, db: db_dependency):
     return actual_user
 
 @user_router.patch("/password", response_model=User)
-async def update_user(user: UserPasswordEditDto, request: Request, db: db_dependency):
+async def update_user_password(user: UserPasswordEditDto, request: Request, db: db_dependency):
     authorization_token = get_authorization_header(request)
     if not authorization_token:
         raise HTTPException(status_code=401, detail="Authorization missing")
