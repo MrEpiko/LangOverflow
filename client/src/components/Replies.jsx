@@ -86,6 +86,25 @@ const handleDeleteReply = () => {
 deleteReply(obj);
 }
 
+if(reply.author == null){
+  return (
+    <div className={styles.container}>
+      <div className={styles.impression}>
+        <button onClick={handleUpVote}>upvote</button>
+        <h2>{upDownNumber}</h2>
+        <button onClick={handleDownVote}>downvote</button>
+      </div>
+      <div className={styles.mainReplyContainer}>
+        <div className={styles.contentContainer}>
+          <h1>Deleted user</h1>
+          <h2>{reply.content}</h2>     
+        </div>
+      </div>
+        
+    </div>
+  )
+}
+else{
   return (
     <div className={styles.container}>
       <div className={styles.impression}>
@@ -103,6 +122,7 @@ deleteReply(obj);
         
     </div>
   )
+}
 }
 
 
