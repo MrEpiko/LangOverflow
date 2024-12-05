@@ -38,8 +38,10 @@ const ProfilePage = () => {
                 </div>
                 {
                     data && (data.threads.length === 0 ? <h2 className={styles.dontHave}>You don't have any posted questions.</h2> :
-                        <div className={styles.questionLines}>
-                            <h5>Your questions:</h5>
+                        <div>
+                            <h5 className={styles.yourQuestions}>Your questions:</h5>
+                            <div className={styles.questionLines}>
+                        
                         {
                             data && data.threads.map((thread) => (
                                 <div key={thread.id}>
@@ -48,6 +50,8 @@ const ProfilePage = () => {
                             ))
                         }
                     </div> 
+                    </div>
+                        
                 )}
             </div> 
         </div>
