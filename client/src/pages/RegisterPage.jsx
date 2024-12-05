@@ -46,7 +46,7 @@ const RegisterPage = () => {
     <div className={styles.container}>
       <div className={styles.registerForm}>
         <div className={styles.registerForm_left}>
-          <h2>Register</h2>
+          <h2>Sign up</h2>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -79,7 +79,7 @@ const RegisterPage = () => {
               <div className={styles.loginWrapper}>
                 <span>Alrady have an account?</span>
                 <span>
-                  <Link to="/login" replace>Log in</Link>
+                  <Link to="/login" replace className={styles.redirect}>Sign in</Link>
                 </span>
               </div>
               <div className={styles.googleLoginContainer}>
@@ -90,7 +90,7 @@ const RegisterPage = () => {
                   theme="filled_black"
                 />
               </div>
-              <button type="submit">Register</button>      
+              <button type="submit">Sign up</button>      
           </form>
         </div>
         <div className={styles.divider}></div>

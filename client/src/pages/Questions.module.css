@@ -1,9 +1,79 @@
+.container{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--primary);
+    height: 100vh;
+    padding-top: 10rem;
+}
 
+.searchForm{
+    width:50%;
+
+    padding: 1rem;
+    padding-left: 1.5rem;
+    background-color: var(--background);
+}
+
+h1{
+    font-size: 3rem;
+    font-weight: 500;
+
+    margin-bottom:1rem;
+}
+
+.leftSearch{
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input{
+    padding: 1.2rem;
+    border: 1px solid var(--text);
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 16px;
+    width: 90%;
+    height:2rem;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: 0;
+}
+
+.tagButton{
+    width: 10%;
+    height:2rem;
+    height: 40.38px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid var(--text);
+    background-color: var(--primary);
+    color: var(--background);
+    border-left: 0;
+    cursor: pointer;
+}
+
+.tagButton:hover{
+    background-color: var(--secondary);
+    transition: 300ms ease;
+}
+
+.tagSearch{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 0.5rem;
+}
 
 .tagForm {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 }
 
 .tagForm button {
@@ -17,6 +87,8 @@
     transition: background-color 0.3s;
 }
 
+
+
 .tagForm button:hover {
     background-color: var(--secondary);
 }
@@ -29,6 +101,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .tooltipIcon {
@@ -62,4 +135,19 @@
     text-align: center;
     z-index: 10;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.searchButton{
+    padding: 0.5rem 2rem;
+    font-weight: 600;
+    border: 2px solid var(--background);
+    cursor: pointer;
+    color: var(--background);
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+
+.thredsContainer{
+    background-color: red;
+    width: 50%;
 }

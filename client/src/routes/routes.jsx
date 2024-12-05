@@ -44,9 +44,7 @@ const routes = [
     path: '/questions',
       element: (
           <ProtectedRoute>
-              <Pagelayout>
                   <Questions/>
-              </Pagelayout>
           </ProtectedRoute>
       )
     },
