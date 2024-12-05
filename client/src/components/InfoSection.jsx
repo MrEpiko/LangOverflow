@@ -6,12 +6,7 @@ const InfoSection = ( { children }) => {
       <div className={style.leftSide}>
         <h1>Learn a second language or help someone?</h1>
         <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text. 
-            It has roots in a piece of classical Latin literature from 45 BC, 
-            making it over 2000 years old. Richard McClintock,
-            a Latin professor at Hampden-Sydney College in Virginia,
-            looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage,
-            and going through the cites of the word in classical literature, discovered the undoubtable source.
+        Welcome to LangOverflow, the ultimate Q&A platform for language enthusiasts, learners, and experts alike. Whether you’re decoding tricky grammar, seeking pronunciation tips, or exploring cultural nuances, LinguaSpace connects you with a global community passionate about languages. Share your expertise, ask burning questions, and learn from native speakers and linguists across diverse languages. Our system rewards meaningful contributions with badges and recognition, fostering an environment of collaboration and growth. Dive into rich discussions, discover new perspectives, and build confidence in your language journey. At LinguaSpace, every question matters—because communication unites us all.
         </p>
         { children }
       </div>
