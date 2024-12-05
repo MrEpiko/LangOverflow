@@ -50,3 +50,7 @@
     background-color: var(--highlight);
     margin: 5px 0;
 }
+
+.tags{
+    display: flex;
+}

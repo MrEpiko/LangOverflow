@@ -45,6 +45,8 @@ h3{
    width: 100%;
    padding-right: 1rem;
    padding-bottom: 0.25rem;
+   gap:1rem
+
 }
 
 .link{
@@ -56,4 +58,45 @@ h3{
    padding-left: 1rem;
    padding-top: 0.5rem;
    border-left: 1px var(--primary) solid;
+}
+
+
+.tags{
+   display: flex;
+   gap: 0.25rem;
+}
+
+.tag{
+   background-color: var(--primary);
+   border-radius: 5px;
+   padding: 0 1rem;
+   color: white;
+   font-weight: 500;
+}
+
+.authorUsername{
+   font-weight: 600;
+}
+
+.profilePicture{
+   height: 2rem;
+   border-radius: 50%;
+}
+
+.authordata{
+   display: flex;
+   align-items: center;
+   gap:0.25rem;
+}
+
+
+@media(max-width:650px){
+   h1{
+      margin: 0 !important;
+      font-size: 1.5rem !important;
+   }
+
+   h3{
+      font-size: 0.75rem;
+   }
 }

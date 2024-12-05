@@ -9,7 +9,8 @@ html{
     align-items: center;
     flex-direction: column;
     background-color: var(--primary);
-    padding-top: 10rem;
+    padding-top: 6rem;
+    padding-bottom: 3rem;
 }
 
 .searchForm{
@@ -166,6 +167,9 @@ input{
 }
 
 @media(max-width: 600px){
+    #root{
+        width: 100%;
+    }
     .searchForm{
         width: 100% !important;
     }
