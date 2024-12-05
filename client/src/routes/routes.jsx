@@ -72,9 +72,7 @@ const routes = [
     path: '/profile',
     element: (
         <ProtectedRoute>
-            <Pagelayout>
                 <ProfilePage/>
-            </Pagelayout>
         </ProtectedRoute>
     ),
   },
