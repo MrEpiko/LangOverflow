@@ -83,7 +83,7 @@ const Questions = () => {
       <div className={styles.thredsContainer}>
           {datat && Object.keys(datat).length > 0 ? (
           datat.threads.map((thread) => (
-            <Link to={`/questioninfullfocus/${thread.id}`}>{<QuestionLine thread={thread}/>}</Link>
+          (<QuestionLine thread={thread}/>)
           ))
           ) : null}
       </div>
