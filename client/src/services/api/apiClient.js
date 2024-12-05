@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 const apiClient = axios.create({
     baseURL: `${import.meta.env.VITE_API_URL}`,

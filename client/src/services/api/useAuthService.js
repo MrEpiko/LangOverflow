@@ -102,7 +102,7 @@ export const useAuthService = () => {
         setAuthToken(null);
         setCurrentUser({});
         Delete('token');
-        navigate('/login', { replace: true });
+        navigate('/', { replace: true });
         successMessage('Success logout');
     };
     return { login, register, authWithGoogle, logout, fetchUserProfile, deleteProfile};
