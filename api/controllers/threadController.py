@@ -55,8 +55,8 @@ async def get_thread(thread_id: int, request: Request, db: db_dependency):
     actual_thread.author = UserResponseDto(**author_element)
     for r in actual_thread.replies:
         user_element = await db.users.find_one({"id": r.author_id})
-        if not user_element: continue
-        r.author = UserResponseDto(**user_element)
+        if not user_element: r.author = None
+        else: r.author = UserResponseDto(**user_element)
     return actual_thread
 
 @thread_router.patch("/{thread_id}", response_model=Thread)
@@ -179,6 +179,7 @@ async def search(tags: ThreadSearchDto, request: Request, db: db_dependency, pag
         t = Thread(**thread)
         author_element = await db.users.find_one({"id": t.author_id})
         if author_element: t.author = UserResponseDto(**author_element)
+        else: t.author = None
         threads_output.append(t)
 
     return {
@@ -204,5 +205,6 @@ async def get_random_threads(request: Request, db: db_dependency, limit: int = Q
         t = Thread(**t)
         author_element = await db.users.find_one({"id": t.author_id})
         if author_element: t.author = UserResponseDto(**author_element)
+        else: t.author = None
         threads.append(t)
     return threads
